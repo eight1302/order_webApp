@@ -1,0 +1,19 @@
+{
+    "data":{
+        "data_year":"152",
+        "data_mouth":"20",
+        "data_week":"05",           
+        "state":1
+    },
+    "menu":{
+    	"home":"首页",
+    	"service":"自助下单",
+    	"order":"订单管理",
+    	"person":"个人中心",
+    	"sale":"售后管理",
+        "select_menu":"选择返修产品列表",
+        "oem_menu":"OEM产品返修列表",
+        "weld_menu":"weld产品返修列表",
+    	"state":200
+    }
+}
