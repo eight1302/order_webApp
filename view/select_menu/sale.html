@@ -14,8 +14,8 @@
 		</div>
 		<div class="col-md-2" style="float: right;">
 			<div class="repair_find">
-				<input type="text" name="" style="width: 100px;">
-				<button>搜索</button>
+				<input type="text" name="" class="con_on" id="contract_no" value="" placeholder="输入合同号!" style="width: 100px;">
+				<button class="con_btn">搜索</button>
 			</div>
 		</div>
 	</div>
@@ -63,14 +63,14 @@
 <section class="product_question">
 	<div class="col-md-12 repair_title">
 		<span style="font-size: 18px;color: #fff;margin-left: 20px;">填写质量问题</span>
-		<div class="cental_pro">
+		<div class="cental_pro_one">
 			<img src="../../img/canel.png" style="width: 100%;height: 100%;margin-top: 1px;">
 		</div>
 	</div>
 	<div class="col-md-12 question">
 		<div class="col-md-6 question_des">
 			<div class="des_ques">问题描述</div>
-			<textarea class="textare" placeholder="请输入质量问题,问题**，用分号分开,字数小于1500!"></textarea>
+			<textarea class="textare" id="textare" value="" placeholder="请输入质量问题,问题**，用分号分开,字数小于1500!"></textarea>
 		</div>
 		<div class="col-md-6 question_img">
 			<label style="margin-top: 20px;margin-left: 15px;">上传图片：<input type="file" class="file" id="file" value="" style="float: right;"></label>
