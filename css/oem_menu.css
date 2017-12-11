@@ -1,5 +1,5 @@
-.select_product{
-    width: 98%;
+.oem_product,.weld_product{
+	width: 98%;
     height: 92%;
     margin: auto;
     background: #fff;
@@ -86,18 +86,31 @@
     color: #fff;
     text-align: center;
 }
-.contract_no,.pooduct_name,.product_data,.contract_state,.product_type{
-	width: 16.6%;
+.contract_no,.contract_data,.pooduct_no,.pooduct_name,.product_type,.product_quantity,.contract_state{
+	width: 12%;
 	float: left;
 }
-.product_quantity{
-	width: 8.4%;
+.logistics,.selcet_pro{
+	width: 8%;
 	float: left;
 }
-.contracts{
+.log_info,.selcet_detail{
+	width: 90%;
+    float: left;
+    border-radius: 15px;
+    background: #176cb7;
+    height: 27px;
+    margin-top: 5px;
+    line-height: 27px;
+    color: #fff;
+    cursor: pointer;
+    margin-left: 0.5%;
+}
+.oem_contracts{
 	width: 100%;
 	height: 85%;
 	overflow: auto;
+	text-align: center;
 }
 .contract_product{
 	padding: 0;
@@ -168,73 +181,14 @@
     float: right;
     margin-top: 10px;
 }
-.product_title{
-    width: 98%;
-    margin-left: 1%;
-    margin-top: 20px;
-    text-align: center;
-    height: 40px;
-    line-height: 40px;
-    color: #fff;
-    background: #3296ec;
-    padding: 0;
-}
-.no{
-    float: left;
-    width: 3%;
-}
-.up{
-    float: left;
-    width: 7%;
-}
-.number,.name1,.type,.quantity,.re_quantity,.re_question{
-    float: left;
-    width: 18%;
-}
-.products_info{
-    width: 98%;
-    margin-left: 1%;
-    height: 75%;
-    padding: 0;
-    overflow: auto;
-    background: #fff;
-}
-.products_destrion{
-    padding: 0;
-    margin: 0;
-    height: 40px;
-    line-height: 40px;
-    color: #4193d2;
-    text-align: center;
-    font-size: 13px;
-}
-.products_destrion:nth-child(2n){
-    background: #fdf7f7;
-}
-.products_destrion:hover{
-    background: #eaeaea;
-}
-.add_repair{
-    float: left;
-    width: 140px;
-    height: 30px;
-    line-height: 30px;
-    background: #139cda;
-    text-align: center;
-    margin-right: 20px;
-    border-radius: 20px;
-    margin-left: 40px;
-    color: #fff;
-    box-shadow: 0 0 5px #716c6c;
-    cursor: pointer;
-    margin-top: 1%;
-}
 .product_question{
     top: 0;
     left: 0;
     position: fixed;
     width: 70%;
     height: 70%;
+    min-width: 300px;
+    min-height: 250px;
     margin-left: 15%;
     margin-top: 7%;
     background: #fff;
@@ -278,7 +232,6 @@
     height: 80%;
     resize: none;
     border: 1px solid #eee;
-    display: none;
 }
 .product_repair_btn{
      float: left;
@@ -298,4 +251,85 @@
 .con_on::-webkit-input-placeholder{
     color: #666;
     font-size: 10px;
+}
+
+/*物流信息布局*/
+.logis_product{
+	top: 0;
+    left: 0;
+    position: fixed;
+    width: 30%;
+    height: 40%;
+    min-width: 530px;
+    min-height: 360px;
+    margin-left: 30%;
+    margin-top: 10%;
+    background: #fff;
+    display: none;
+    z-index: 200;
+    border-radius: 6px;
+}
+.oem_repair_btn,.weld_repair_btn{
+	float: left;
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
+    background: #139cda;
+    text-align: center;
+    margin-right: 20px;
+    border-radius: 20px;
+    margin-left: 40px;
+    color: #fff;
+    box-shadow: 0 0 5px #716c6c;
+    cursor: pointer;
+    margin-top: 1%;
+}
+.logis_detail{
+	width: 98%;
+    height: 70%;
+    margin-left: 1%;
+    margin-top: 1%;
+    overflow: auto;
+}
+.distribution{
+	margin-top: 7%;
+	height: 40px;
+	line-height: 40px;
+	background: #fff;
+	border-radius: 6px;
+	box-shadow: 1px 1px 2px #7ca6b9;
+	border:1px solid #cee0e8;
+}
+.ten{
+	background: #03A9F4;
+    width: 18%;;
+    padding: 0;
+    margin: 0;
+    height: 39px;
+    display: flex;
+    margin-left: -3%;
+    border-radius: 6px 0 0 6px;
+    text-align: center;
+    color: #fff;
+    padding: 0; 
+}
+.nine{
+	text-align: center;
+	width: 85%;
+	float: left;
+	
+}
+.eight{
+	float: left;
+    width: 84%;
+    height: 39px;
+    line-height: 39px;
+    padding: 0;
+}
+.sex{
+	width: 90%;
+    line-height: 39px;
+    height: 39px;
+    border-radius: 0 6px 6px 0;
+    border: none;
 }
