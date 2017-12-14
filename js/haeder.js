@@ -140,7 +140,7 @@ $(document).ready(function(){
 
     /*menu菜单信息*/
     $.getJSON({
-        url:"../../json/4.json",
+        url:"../../json/menu.json",
         cache:false,
         success:function(result,data){
             if(result.menu.state==200){
@@ -150,7 +150,15 @@ $(document).ready(function(){
                 $(".menu_ul").find(".person_des").html(result.menu.person);
                 $(".menu_ul").find(".sale_des").html(result.menu.sale);
 
-                //售后菜单
+                //自助二级下单菜单
+                $(".server_order_menu").find(".oem_server_des").html(result.menu.oem_service);
+                $(".server_order_menu").find(".weld_server_des").html(result.menu.weld_service);
+
+               //合同管理二级菜单
+                $(".order_contract_menu").find(".oem_contract_des").html(result.menu.oem_order);
+                $(".order_contract_menu").find(".weld_contract_des").html(result.menu.weld_order);
+
+                //售后二级菜单
                 $(".sale_ul").find(".select_des").html(result.menu.select_menu);
                 $(".sale_ul").find(".oem_des").html(result.menu.oem_menu);
                 $(".sale_ul").find(".weld_des").html(result.menu.weld_menu);

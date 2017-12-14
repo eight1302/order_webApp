@@ -54,6 +54,19 @@ $(function(){
                    						'</div>';
                     $(".contracts").append(select_menu_product);
                 }); 
+                var content=40;       //总数
+	          	var pagesize=14;                            //每页显示数据14条
+	          	var pageTotal=Math.ceil(content/pagesize);  //分页数量
+	          	$(".page-left").append('<ul class="pagination" id="page2"></ul>');
+	          	Page({
+	            	num:pageTotal,             //页码数
+	            	startnum:1,
+	            	pagesize:14,             //每页显示的数量
+	            	elem:$('#page2'),       //指定的元素
+	            	callback:function(n){   //回调函数 
+	                	console.log(n);     
+	            	}
+	          	});
             }
         }  
     });

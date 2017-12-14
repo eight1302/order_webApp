@@ -6,20 +6,53 @@ $(function(){
 		window.location = "../home/home.html";
 	});
 	//自助下单路由切换
-	$("ul .service_li").on('click',function(){
+	$(".server_order_menu").hide();
+	$("#service_li").mouseover(function (){  
+        $(".server_order_menu").show();
+        $(".server_order_menu").mouseover(function (){  
+	        $(".server_order_menu").show(); 
+	    }).mouseout(function (){
+			$(".server_order_menu").hide();
+		});
+    }).mouseout(function (){
+		$(".server_order_menu").hide();
+	});
+
+    //oem产品信息
+	$("ul .oem_server_menu").on('click',function(){
 		window.location = "../service/home.html";
 	});
-	//下单管理路由切换
-	$("ul .order_li").on('click',function(){
+	//焊接产品信息
+	$("ul .weld_server_menu").on('click',function(){
+		window.location = "../weld_service/home.html";
+	});
+
+	//合同管理路由切换
+	$(".order_contract_menu").hide();
+	$("#order_li").mouseover(function (){  
+        $(".order_contract_menu").show();
+        $(".order_contract_menu").mouseover(function (){  
+	        $(".order_contract_menu").show(); 
+	    }).mouseout(function (){
+			$(".order_contract_menu").hide();
+		});
+    }).mouseout(function (){
+		$(".order_contract_menu").hide();
+	});
+
+    //oem合同信息
+	$("ul .oem_contract_menu").on('click',function(){
 		window.location = "../order/home.html";
 	});
+	//焊接合同信息
+	$("ul .weld_contract_menu").on('click',function(){
+		window.location = "../weld_order/home.html";
+	});
+
+
 	//个人中心路由切换
 	$("ul .person_li").on('click',function(){
 		window.location = "../person/home.html";
-	});
-	//系统设置路由切换
-	$("ul .system_li").on('click',function(){
-		window.location = "../system/home.html";
 	});
 	//售后设置路由切换
 	$(".sale_menu").hide();

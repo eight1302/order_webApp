@@ -79,6 +79,7 @@ $(function(){
 				company=$("#company").val(),
 				pass_confirm=$("#pass_confirm").val(),
 				security = $("#security").val(),
+				provinces = $("#provinces").val(),
 				checkbox=$("#checkbox1").prop("checked");
 				 //判断复选框是否选中，如果没选中，弹出提示框
 				if (checkbox === true) {
@@ -95,6 +96,14 @@ $(function(){
 		        	return false;
 		        }else{
 		        	$("#user_msg").hide();
+		        }
+
+		        //判断公司所在地
+		        if(provinces == ""){
+		        	swal("请完成表单填写！")
+		        	return false;
+		        }else{
+		        	$("#provinces_msg").hide();
 		        }
 		        
 		         //验证手机提交信息
@@ -113,7 +122,7 @@ $(function(){
 		        //公司名称
 		         if(company==""){
 		        	swal("请完成表单填写！")
-		        	$("#msg_company").html("公司名称不能为空");
+		        	$("#msg_provinces").html("公司名称不能为空");
 		        	return false;
 		        }else{
 		        	$("#company_msg").hide();
@@ -157,11 +166,12 @@ $(function(){
 
 		        //数据json表单
 		        data={
-		        	"user":user,
-		        	"phone":phone,
-		        	"pass":pass,
-		        	"pass_confirm":pass_confirm,
-		        	"checkbox":checkbox
+		        	"user" : user,
+		        	"phone" : phone,
+		        	"pass" : pass,
+		        	"pass_confirm" : pass_confirm,
+		        	"checkbox" : checkbox,
+		        	"provinces" : provinces
 		        };
 		        //数据提交
 		        $.ajax({  

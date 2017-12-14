@@ -16,23 +16,203 @@ $(function(){
     var now_time=year+'.'+month+"."+date;
 
     //展示焊接信息自助下单获取信息业务逻辑编写开始
+    $.getJSON({
+        url:"../../json/data_weld.json",
+        cache:false,
+        success:function(result,data){
+            if(result.orderlist.state==200){
+                $.each(result.orderlist.weld, function(idx,obj){
+                    var html;
+                    html = '<div class="product_all">'+
+                            '<div class="col-md-1 product_list" data-field="state" data-checkbox="true">'+'<input type="checkbox" name="sign" style="width: 15px;height: 15px;" value="'+obj.id+'" />'+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_id+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_time+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_name+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_number+'</div>'+
+                            '<div class="col-md-2 product_list" name="sign" data-field="product_id" data-align="center" id="product_type" value="'+obj.product_type+'">'+obj.product_type+'</div>'+
+                            '<div class="col-md-1 product_details_weld" data-field="product_id" data-align="center" product_id="'+obj.id+'">查看详情</div>';
+                    $(".page_list_weld").append(html);         
+                }); 
+                var content=result.orderlist.content;       //总数
+                var pagesize=14;                            //每页显示数据14条
+                var pageTotal=Math.ceil(content/pagesize);  //分页数量
+                var html;
+                html='<ul class="pagination" id="page2"></ul>';
+                $(".page-left").append(html);
+                Page({
+                    num:pageTotal,             //页码数
+                    startnum:1,
+                    pagesize:1,             //每页显示的数量
+                    elem:$('#page2'),       //指定的元素
+                    callback:function(n){   //回调函数 
+                        console.log(n);     
+                    }
+                });
+
+                //查看详情
+                $(".product_details_weld").on('click',function(){
+                    //加载弹出遮盖层
+                    var id= $(this).attr("product_id");
+                    console.log(id);
+                    var id_data={
+                        "id":id
+                    };
+                    $(".overlay_weld_tow").show();
+                    $(".orders_weld_details").show();
+                                   
+                    $(".cental_pro").on('click',function(){
+                        $(".overlay_weld_tow").hide();
+                        $(".orders_weld_details").hide();
+                        window.location.reload();
+                    });
+
+                    //获取产品信息
+                    $.getJSON({
+                        url:"../../json/weld.json",
+                        cache:false,
+                        data:id_data,
+                        success:function(result,data){
+                            if(result.state==200){
+                                //产品型号
+                                var html_product;
+                                html_product = '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_number+'</div>'+
+                                                '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_name+'</div>'+
+                                                '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_type_number+'</div>';
+                                $(".weld_list").append(html_product);
+
+                                //下载按钮
+                                var html_downlod;
+                                html_downlod = '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="PCB下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;">PCB</div>'+
+                                                '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="坐标文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;">坐标</div>'+
+                                                '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="工艺文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;margin-top: 10px;">工艺</div>'+
+                                                '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="BOM文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;margin-top: 10px;">BOM</div>';   
+                                $(".list_downlod").append(html_downlod);
+
+                                //产品pcba清单
+                                var html_pcba;
+                                html_pcba = '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_process+'</div>'+
+                                            '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_type+'</div></div></div></div>'+
+                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_joints+'</div>'+
+                                            '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_type+'</div>'+
+                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_joints+'</div>'+
+                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil+'</div>'+
+                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil_num+'</div>';
+                                $(".list_pcba").append(html_pcba);
+
+                                //测试组装
+                                var html_text;
+
+                                html_text = '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_test_time+'</div>'+
+                                            '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_assembly_time+'</div>'+
+                                            '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_prevent_cm2+'</div>'+
+                                            '<div class="col-md-3 product_list" id="product_smark" data-field="product_id" data-align="center" title="'+result.oem_remark+'">'+
+                                                '<span class="remark" id="chuang_news">'+result.oem_remark+'</span>'+
+                                            '</div>';
+                                $(".list_testing").append(html_text);
+                                $(".remark").each(function(){
+                                    var maxwidth=2;
+                                    if($(this).text().length>maxwidth){
+                                        $(this).text($(this).text().substring(0,maxwidth));
+                                        $(this).html($(this).html()+'…');
+                                    }
+                                });
+                            }
+                        }
+                    });
+                    
+                    //获取bom信息
+                     //获取产品信息
+                    $.getJSON({
+                        url:"../../json/weld.json",
+                        cache:false,
+                        data:id_data,
+                        success:function(result,data){
+                            if(result.state==200){
+                                //bom表头
+                                $.each(result.bom_tital, function(idx,obj){
+                                    var bom_tital;
+                                    bom_tital ='<div class="col-md-1">'+obj.numbering+'</div>'+
+                                                '<div class="col-md-2">'+obj.name+'</div>'+
+                                                '<div class="col-md-1">'+obj.type+'</div>'+
+                                                '<div class="col-md-1">'+obj.encapsulation+'</div>'+
+                                                '<div class="col-md-2">'+obj.bit_number+'</div>'+
+                                                '<div class="col-md-1">'+obj.accuracy+'</div>'+
+                                                '<div class="col-md-2">'+obj.brands+'</div>'+
+                                                '<div class="col-md-1">'+obj.quantity+'</div>'+
+                                                '<div class="col-md-1">备注</div>';
+                                    $(".product_tr_weld").append(bom_tital);
+                                });
+                                //bom清单
+                                $.each(result.bom, function(idx,obj){
+                                    var html_bom;
+                                    html_bom ='<div class="bom_list_oem">'+ 
+                                            '<div class="col-md-1">'+obj.number+'</div>'+
+                                            '<div class="col-md-2">'+obj.name+'</div>'+
+                                            '<div class="col-md-1">'+obj.model_number+'</div>'+
+                                            '<div class="col-md-1">'+obj.encapsulation+'</div>'+
+                                            '<div class="col-md-2">'+obj.accuracy+'</div>'+
+                                            '<div class="col-md-1">'+obj.brands+'</div>'+
+                                            '<div class="col-md-2">'+obj.bit_number+'</div>'+
+                                            '<div class="col-md-1">'+obj.quantity+'</div>'+
+                                            '<div class="col-md-1 weld_bom" title="'+obj.remark+'">'+obj.remark+'</div>'+
+                                        '</div>';   
+                                    $(".product_bom").append(html_bom);
+                                    $(".weld_bom").each(function(){
+                                        var maxwidth=2;
+                                        if($(this).text().length>maxwidth){
+                                            $(this).text($(this).text().substring(0,maxwidth));
+                                            $(this).html($(this).html()+'…');
+                                        }
+                                    });
+                                });
+                            }
+                        }
+                    });
+                });
+            }else{
+                swal("暂无数据！");
+            }
+        },
+        error:function(result,sweetalert){
+            swal("暂无数据！");
+        }
+    });
+
+
+    //查询时间段的信息
+    $(".search_btn").on('click',function(){
+        var data1 = $("#data1").val(),
+            data2 = $("#data2").val();
+        if(data1 == "" || data2 == ""){
+            return false;
+        }
+        var data_time = {
+            "data1" : data1,
+            "data2" : data2
+        };
+           
+        //数据交互
+        $(".page_list_weld").empty();
         $.getJSON({
-            url:"../../json/data_weld.json",
+            type: "post",  
+            url:"../../json/data1.json",
+            data:data_time,// 序列化表单值  
+            async: false, 
             cache:false,
+            dataType:"json", 
             success:function(result,data){
                 if(result.orderlist.state==200){
-                    $.each(result.orderlist.weld, function(idx,obj){
+                    $.each(result.orderlist.list, function(idx,obj){
                         var html;
                         html = '<div class="product_all">'+
-                                '<div class="col-md-1 product_list" data-field="state" data-checkbox="true">'+'<input type="checkbox" name="sign" style="width: 15px;height: 15px;" value="'+obj.id+'" />'+'</div>'+
-                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_id+'</div>'+
-                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_time+'</div>'+
-                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_name+'</div>'+
-                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_number+'</div>'+
-                                '<div class="col-md-2 product_list" name="sign" data-field="product_id" data-align="center" id="product_type" value="'+obj.product_type+'">'+obj.product_type+'</div>'+
-                                '<div class="col-md-1 product_details_weld" data-field="product_id" data-align="center" product_id="'+obj.id+'">'+obj.product_details+'</div>';
-                        $(".page_list_weld").append(html);
-                          
+                            '<div class="col-md-1 product_list" data-field="state" data-checkbox="true">'+'<input type="checkbox" name="sign" style="width: 15px;height: 15px;" value="'+obj.id+'" />'+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_id+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_time+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_name+'</div>'+
+                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_number+'</div>'+
+                            '<div class="col-md-2 product_list" name="sign" data-field="product_id" data-align="center" id="product_type" value="'+obj.product_type+'">'+obj.product_type+'</div>'+
+                            '<div class="col-md-1 product_details_weld" data-field="product_id" data-align="center" product_id="'+obj.id+'">'+obj.product_details+'</div>';
+                        $(".page_list_weld").append(html);          
                     }); 
                     var content=result.orderlist.content;       //总数
                     var pagesize=14;                            //每页显示数据14条
@@ -49,287 +229,33 @@ $(function(){
                             console.log(n);     
                         }
                     });
-
-                    //查看详情
-                    $(".product_details_weld").click(function(){
-                         //加载弹出遮盖层
-                        $(".overlay_weld_tow").show();
-                        $(".orders_weld_details").show();
-                       
-                        $(".cental_pro").click(function(){
-                            $(".overlay_weld_tow").hide();
-                            $(".orders_weld_details").hide();
-                             window.location.href="../../view/service/home.html";
-                        });
-
-                        var id= $(this).attr("product_id");
-                        console.log(id);
-                        var id={
-                            "id":id
-                        };
-                        //获取产品信息
-                        $.getJSON({
-                             url:"../../json/weld.json",
-                            cache:false,
-                            data:id,
-                            success:function(result,data){
-                                if(result.state==200){
-                                    //产品型号
-                                    var html_product;
-                                    html_product = '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_number+'</div>'+
-                                                    '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_name+'</div>'+
-                                                    '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_type_number+'</div>';
-                                    $(".weld_list").append(html_product);
-
-                                    //下载按钮
-                                    var html_downlod;
-                                    html_downlod = '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="PCB下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;">PCB</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="坐标文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;">坐标</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="工艺文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;margin-top: 10px;">工艺</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="BOM文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;margin-top: 10px;">BOM</div>';   
-                                    $(".list_downlod").append(html_downlod);
-
-                                    //产品pcba清单
-                                    var html_pcba;
-                                    html_pcba = '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_process+'</div>'+
-                                                '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_type+'</div></div></div></div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_joints+'</div>'+
-                                                '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_type+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_joints+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil_num+'</div>';
-                                    $(".list_pcba").append(html_pcba);
-
-                                    //测试组装
-                                    var html_text;
-
-                                    html_text = '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_test_time+'</div>'+
-                                                '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_assembly_time+'</div>'+
-                                                '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_prevent_cm2+'</div>'+
-                                                '<div class="col-md-3 product_list" id="product_smark" data-field="product_id" data-align="center" title="'+result.oem_remark+'">'+
-                                                    '<span class="remark" id="chuang_news">'+result.oem_remark+'</span>'+
-                                                '</div>';
-                                    $(".list_testing").append(html_text);
-                                    $(".remark").each(function(){
-                                        var maxwidth=2;
-                                        if($(this).text().length>maxwidth){
-                                            $(this).text($(this).text().substring(0,maxwidth));
-                                            $(this).html($(this).html()+'…');
-                                        }
-                                    });
-
-                                    //bom清单
-                                    $.each(result.bom, function(idx,obj){
-                                        var html_bom;
-                                        html_bom ='<div class="bom_list_oem">'+ 
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.number+'</div>'+
-                                                '<div class="col-md-2" data-field="product_id" data-align="center">'+obj.name+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.model_number+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.encapsulation+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.accuracy+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.brands+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.bit_number+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.quantity+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.price+'</div>'+
-                                                '<div class="col-md-2 weld_bom" data-field="product_id" data-align="center" title="'+obj.remark+'">'+obj.remark+'</div>'+
-                                            '</div>';   
-                                        $(".product_bom").append(html_bom);
-                                        $(".weld_bom").each(function(){
-                                            var maxwidth=2;
-                                            if($(this).text().length>maxwidth){
-                                                $(this).text($(this).text().substring(0,maxwidth));
-                                                $(this).html($(this).html()+'…');
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        });
-                    });
                 }else{
-                     swal("暂无数据！");
+                    swal("暂无数据！");
                 }
             },
             error:function(result,sweetalert){
-               swal("暂无数据！");
+                swal("暂无数据！");
             }
-        });
-
-        //查询时间段的信息
-        $(".search_btn").on('click',function(){
-            var data1 = $("#data1").val(),
-                data2 = $("#data2").val();
-            if(data1 == "" || data2 == ""){
-                return false;
-            }
-            var data_time = {
-                "data1" : data1,
-                "data2" : data2
-            };
-           
-            //数据交互
-             $(".page-list").empty();
-            $.getJSON({
-                type: "post",  
-                url:"../../json/data1.json",
-                data:data_time,// 序列化表单值  
-                async: false, 
-                cache:false,
-                dataType:"json", 
-                success:function(result,data){
-                    if(result.orderlist.state==200){
-                        $.each(result.orderlist.list, function(idx,obj){
-                            var html;
-                            html = '<div class="product_all">'+
-                                    '<div class="col-md-1 product_list" data-field="state" data-checkbox="true">'+'<input type="checkbox" name="sign" style="width: 15px;height: 15px;" value="'+obj.id+'" />'+'</div>'+
-                                    '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_id+'</div>'+
-                                    '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_time+'</div>'+
-                                    '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_name+'</div>'+
-                                    '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+obj.product_number+'</div>'+
-                                    '<div class="col-md-1 product_list" name="sign" data-field="product_id" data-align="center" id="product_type" value="'+obj.product_type+'">'+obj.product_type+'</div>'+
-                                    '<div class="col-md-1 product_details_weld" data-field="product_id" data-align="center" product_id="'+obj.id+'">'+obj.product_details+'</div>';
-                            $(".page_list_weld").append(html);
-                              
-                        }); 
-                        var content=result.orderlist.content;       //总数
-                        var pagesize=14;                            //每页显示数据14条
-                        var pageTotal=Math.ceil(content/pagesize);  //分页数量
-                        var html;
-                        html='<ul class="pagination" id="page2"></ul>';
-                        $(".page-left").append(html);
-                        Page({
-                            num:pageTotal,             //页码数
-                            startnum:1,
-                            pagesize:1,             //每页显示的数量
-                            elem:$('#page2'),       //指定的元素
-                            callback:function(n){   //回调函数 
-                                console.log(n);     
-                            }
-                        });
-
-                       //查看详情
-                    $(".product_details_weld").click(function(){
-                         //加载弹出遮盖层
-                        $(".overlay_weld_tow").show();
-                        $(".orders_weld_details").show();
-                       
-                        $(".cental_pro").click(function(){
-                            $(".overlay_weld_tow").hide();
-                            $(".orders_weld_details").hide();
-                             window.location.href="../../view/service/home.html";
-                        });
-
-                        var id= $(this).attr("product_id");
-                        console.log(id);
-                        var id={
-                            "id":id
-                        };
-                        //获取产品信息
-                        $.getJSON({
-                            url:"../../json/weld.json",
-                            cache:false,
-                            data:id,
-                            success:function(result,data){
-                                if(result.state==200){
-                                    //产品型号
-                                    var html_product;
-                                    html_product = '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_number+'</div>'+
-                                                    '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_name+'</div>'+
-                                                    '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_type_number+'</div>';
-                                    $(".weld_list").append(html_product);
-
-                                    //下载按钮
-                                    var html_downlod;
-                                    html_downlod = '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="PCB下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;">PCB</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="坐标文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;">坐标</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="工艺文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;margin-top: 10px;">工艺</div>'+
-                                                    '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="BOM文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;margin-top: 10px;">BOM</div>';   
-                                    $(".list_downlod").append(html_downlod);
-
-                                    //产品pcba清单
-                                    var html_pcba;
-                                    html_pcba = '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_process+'</div>'+
-                                                '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_type+'</div></div></div></div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_joints+'</div>'+
-                                                '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_type+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_joints+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil+'</div>'+
-                                                '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil_num+'</div>';
-                                    $(".list_pcba").append(html_pcba);
-
-                                    //测试组装
-                                    var html_text;
-
-                                    html_text = '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_test_time+'</div>'+
-                                                '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_assembly_time+'</div>'+
-                                                '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_prevent_cm2+'</div>'+
-                                                '<div class="col-md-3 product_list" id="product_smark" data-field="product_id" data-align="center" title="'+result.oem_remark+'">'+
-                                                    '<span class="remark" id="chuang_news">'+result.oem_remark+'</span>'+
-                                                '</div>';
-                                    $(".list_testing").append(html_text);
-                                    $(".remark").each(function(){
-                                        var maxwidth=2;
-                                        if($(this).text().length>maxwidth){
-                                            $(this).text($(this).text().substring(0,maxwidth));
-                                            $(this).html($(this).html()+'…');
-                                        }
-                                    });
-
-                                    //bom清单
-                                    $.each(result.bom, function(idx,obj){
-                                        var html_bom;
-                                        html_bom ='<div class="bom_list_oem">'+ 
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.number+'</div>'+
-                                                '<div class="col-md-2" data-field="product_id" data-align="center">'+obj.name+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.model_number+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.encapsulation+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.accuracy+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.brands+'</div>'+
-                                                '<div class="col-md-1" data-field="product_id" data-align="center">'+obj.bit_number+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.quantity+'</div>'+
-                                                '<div class="col-md-1" data-field="product_time" data-align="center">'+obj.price+'</div>'+
-                                                '<div class="col-md-2 weld_bom" data-field="product_id" data-align="center" title="'+obj.remark+'">'+obj.remark+'</div>'+
-                                            '</div>';   
-                                        $(".product_bom").append(html_bom);
-                                        $(".weld_bom").each(function(){
-                                            var maxwidth=2;
-                                            if($(this).text().length>maxwidth){
-                                                $(this).text($(this).text().substring(0,maxwidth));
-                                                $(this).html($(this).html()+'…');
-                                            }
-                                        });
-                                    });
-                                }
-                            }
-                        });
-                    });
-                    }else{
-                         swal("暂无数据！");
-                    }
-                },
-                error:function(result,sweetalert){
-                   swal("暂无数据！");
-                }
-            });            
-        });
+        });            
+    });
    
 
     /*下单按钮以及图层业务逻辑展示*/
-    $(".product_menu_weld_add").click(function(){
+    $(".product_menu_weld_add").on('click',function(){
         $(".overflow_weld").show();
         $(".weld_details").show();
         //退出焊接下单页面
-        $(".cental_pro").click(function(){
+        $(".cental_pro").on('click',function(){
             $(".overflow_weld").hide();
             $(".weld_details").hide();
-            window.location.href="../../view/service/home.html";
+            window.location.reload();
         });
     });
 
      /*自助下单获取信息业务逻辑编写结束*/
 
     //删除焊接单个产品
-    $(".product_menu_weld_dele").click(function(){
+    $(".product_menu_weld_dele").on('click',function(){
         var productIds = [];
         var signs = $("input[name='sign']");
         $.each(signs,function(key,obj){
@@ -389,188 +315,92 @@ $(function(){
     });
 
     /*weld产品信息填写业务逻辑编写*/
-    $(".add_weld_product").click(function(sweetalert){
+    $(".add_weld_product").on('click',function(sweetalert){
         swal({
-                title: "",
-                text: "您确定添加此产品到产品列表吗？",
-                type: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#7B69B3",
-                confirmButtonText: "确定",
-                cancelButtonText: "取消",
-                closeOnConfirm: false
-            },function(isConfirm){
-                if(isConfirm){
+            title: "",
+            text: "您确定添加此产品到产品列表吗？",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#7B69B3",
+            confirmButtonText: "确定",
+            cancelButtonText: "取消",
+            closeOnConfirm: false
+        },function(isConfirm){
+            if(isConfirm){
+                //获取焊接订单新数据信息
+                var weld_product_name = $("#weld_product_name").val(),
+                    weld_product_type = $("#weld_product_type").val(),
+                    weld_pcba_process = $("#weld_pcba_process").val(),
+                    weld_pcba_smt_type = $("#weld_pcba_smt_type").val(),
+                    weld_pcba_smt_joints = $("#weld_pcba_smt_joints").val(),
+                    weld_pcba_dip_type = $("#weld_pcba_dip_type").val(),
+                    weld_pcba_dip_joints = $("#weld_pcba_dip_joints").val(),
+                    weld_pcba_stencil = $("#weld_pcba_stencil").val(),
+                    weld_pcba_stencil_number = $("#weld_pcba_stencil_number").val(),
+                    weld_test_time = $("#weld_test_time").val(),
+                    weld_prevent_cm2 = $("#weld_prevent_cm2").val(),
+                    weld_remark = $("#weld_remark").val(),
+                    product_class_type = $("#product_class_type").val();
 
-                    //获取焊接订单新数据信息
-                    var weld_product_name = $("#weld_product_name").val(),
-                        weld_product_type = $("#weld_product_type").val(),
-                        weld_pcb_file = $("#weld_pcb_file").val(),
-                        weld_coordinate_file = $("#weld_coordinate_file").val(),
-                        weld_process_file = $("#weld_process_file").val(),
-                        weld_bom_file = $("#weld_bom_file").val(),
-                        weld_pcba_process = $("#weld_pcba_process").val(),
-                        weld_pcba_smt_type = $("#weld_pcba_smt_type").val(),
-                        weld_pcba_smt_joints = $("#weld_pcba_smt_joints").val(),
-                        weld_pcba_dip_type = $("#weld_pcba_dip_type").val(),
-                        weld_pcba_dip_joints = $("#weld_pcba_dip_joints").val(),
-                        weld_pcba_stencil = $("#weld_pcba_stencil").val(),
-                        weld_pcba_stencil_number = $("#weld_pcba_stencil_number").val(),
-                        weld_test_time = $("#weld_test_time").val(),
-                        weld_assembly_time = $("#weld_assembly_time").val(),
-                        weld_prevent_cm2 = $("#weld_prevent_cm2").val(),
-                        weld_remark = $("#weld_remark").val(),
-                        product_class_type = $("#product_class_type").val();
-
-                     //数据库json格式
-                    var weld_data={
-                        "weld_product_name" : weld_product_name,
-                        "weld_product_type" : weld_product_type,
-                        "weld_pcb_file" : weld_pcb_file,
-                        "weld_coordinate_file" : weld_coordinate_file,
-                        "weld_process_file" : weld_process_file,
-                        "weld_bom_file" : weld_bom_file,
-                        "weld_pcba_process" : weld_pcba_process,
-                        "weld_pcba_smt_type" : weld_pcba_smt_type,
-                        "weld_pcba_smt_joints" : weld_pcba_smt_joints,
-                        "weld_pcba_dip_type" : weld_pcba_dip_type,
-                        "weld_pcba_dip_joints" : weld_pcba_dip_joints,
-                        "weld_pcba_stencil" : weld_pcba_stencil,
-                        "weld_pcba_stencil_number" : weld_pcba_stencil_number,
-                        "weld_test_time" : weld_test_time,
-                        "weld_assembly_time" : weld_assembly_time,
-                        "weld_prevent_cm2" : weld_prevent_cm2,
-                        "weld_remark" : weld_remark,
-                        "product_class_type" : product_class_type,
-                        "now_time":now_time
-                    };
+                //数据库json格式
+                var weld_data={
+                    "weld_product_name" : weld_product_name,
+                    "weld_product_type" : weld_product_type,
+                    "weld_pcba_process" : weld_pcba_process,
+                    "weld_pcba_smt_type" : weld_pcba_smt_type,
+                    "weld_pcba_smt_joints" : weld_pcba_smt_joints,
+                    "weld_pcba_dip_type" : weld_pcba_dip_type,
+                    "weld_pcba_dip_joints" : weld_pcba_dip_joints,
+                    "weld_pcba_stencil" : weld_pcba_stencil,
+                    "weld_pcba_stencil_number" : weld_pcba_stencil_number,
+                    "weld_test_time" : weld_test_time,
+                    "weld_prevent_cm2" : weld_prevent_cm2,
+                    "weld_remark" : weld_remark,
+                    "product_class_type" : product_class_type,
+                    "now_time":now_time
+                };
 
 
-                    //判断weld信息不能为空的选项信息
+                //判断weld信息不能为空的选项信息
                     
-                    if(weld_product_name=="" || weld_pcba_process=="" || weld_pcba_smt_type=="" || weld_pcba_dip_type==""){
-                        swal("信息不能为空!");
+                if(weld_product_name=="" || weld_pcba_process=="" || weld_pcba_smt_type=="" || weld_pcba_dip_type==""){
+                    swal("信息不能为空!");
+                    return false;
+                }
+
+                //判断焊接点数、组装时间
+                if(!(/[0-9]/.test(weld_pcba_smt_joints)) || !(/[0-9]/.test(weld_pcba_dip_joints)) || !(/[0-9]/.test(weld_pcba_smt_type)) || !(/[0-9]/.test(weld_pcba_dip_type))){
+                    swal("SMT和DIP的种类、焊接点数必须是数字!");
+                    return false;
+                }
+
+                //判断产品编号以及钢网编号
+                if(weld_product_type=="" || (/[\u4e00-\u9fa5]/.test(weld_product_type))){
+                    swal("产品型号不能为空、汉字或全角符号！");
+                    return false;
+                }
+                if(weld_pcba_stencil_number!=""){
+                    if((/[\u4e00-\u9fa5]/.test(weld_pcba_stencil_number))){
+                        swal("钢网编号不能为汉字或全角符号！");
                         return false;
                     }
+                }
 
-                    //判断pcb文件
-                    if(weld_pcb_file==""){
-                        swal("PCB文件不能为空!");
+                //判断焊接点数、组装时间           
+                 if(weld_test_time!=""){
+                    if(!(/[0-9]/.test(weld_test_time))){
+                        swal("焊接产品测试时间必须是数字!");
                         return false;
-                    }else{
-                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
-                        var weld_pcb="0";
-                        var newFileName = weld_pcb_file.split('.');
-                        newFileName = newFileName[newFileName.length-1];
-                        for(var i=0;i<fileTypes.length;i++){
-                            if(fileTypes[i] == newFileName){
-                            weld_pcb = "1";
-                            　}
-                        }
-                        if(weld_pcb == "0"){
-                           swal("PCB文件必须是rar,zip,tar,gzip,jar压缩文件！");
-                            return false;
-                        }
-                    }
-
-                    //判断bom文件
-                    if(weld_bom_file==""){
-                        swal("BOM不能为空!");
-                        return false;
-                    }else{
-                         var fileTypes = new Array("xlsx","xlsm","xlsb","xls","xlt","xltx","xla");  //定义可支持的文件类型数组
-                        var weld_bomfile = "0";
-                        var newFileName = weld_bom_file.split('.');
-                        newFileName = newFileName[newFileName.length-1];
-                        for(var i=0;i<fileTypes.length;i++){
-                            if(fileTypes[i] == newFileName){
-                                weld_bomfile = "1";
-                            }
-                        }
-                        if(weld_bomfile == "0"){
-                            swal("BOM文件必须是xlsx,xlsm,xlsb,xls,xlt,xltx,xla！");
-                            return false;
-                        }
-                    }
-
-                     //判断坐标文件
-                    if(weld_coordinate_file != ''){
-                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
-                        var weld_coordinate = "0";
-                        var newFileName = weld_coordinate_file.split('.');
-                        newFileName = newFileName[newFileName.length-1];
-                        for(var i=0;i<fileTypes.length;i++){
-                            if(fileTypes[i] == newFileName){
-                                weld_coordinate = "1";
-                            }
-                        }
-                        if(weld_coordinate == "0"){
-                            swal("坐标文件必须是rar,zip,tar,gzip,jar压缩文件！");
-                            return false;
-                        }
-                    }
-
-                    //工艺文件
-                    if(weld_process_file != ''){
-                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
-                        var weld_process = "0";
-                        var newFileName = weld_process_file.split('.');
-                        newFileName = newFileName[newFileName.length-1];
-                        for(var i=0;i<fileTypes.length;i++){
-                            if(fileTypes[i] == newFileName){
-                                weld_process = "1";
-                            }
-                        }
-                        if(weld_process == "0"){
-                            swal("工艺文件必须是rar,zip,tar,gzip,jar压缩文件！");
-                            return false;
-                        }
-                    }
-
-
-                     //判断焊接点数、组装时间
-                    if(!(/[0-9]/.test(weld_pcba_smt_joints)) || !(/[0-9]/.test(weld_pcba_dip_joints)) || !(/[0-9]/.test(weld_pcba_smt_type)) || !(/[0-9]/.test(weld_pcba_dip_type))){
-                         swal("SMT和DIP的种类、焊接点数必须是数字!");
-                        return false;
-                    }
-
-                    //判断产品编号以及钢网编号
-                    if(weld_product_type=="" || (/[\u4e00-\u9fa5]/.test(weld_product_type))){
-                        swal("产品型号不能为空、汉字或全角符号！");
-                        return false;
-                    }
-                    if(weld_pcba_stencil_number!=""){
-                        if((/[\u4e00-\u9fa5]/.test(weld_pcba_stencil_number))){
-                            swal("钢网编号不能为汉字或全角符号！");
-                            return false;
-                        }
-                    }
-
-                    //判断焊接点数、组装时间
+                   }
+                }
                    
-                     if(weld_test_time!=""){
-                        if(!(/[0-9]/.test(weld_test_time))){
-                            swal("焊接产品测试时间必须是数字!");
-                            return false;
-                       }
+                if(weld_prevent_cm2!=""){
+                    if(!(/[0-9]/.test(weld_prevent_cm2))){
+                        swal("喷涂三防必须是数字!");
+                        return false;
                     }
-                    if(weld_assembly_time!=""){
-                        if(!(/[0-9]/.test(weld_assembly_time))){
-                            swal("焊接产品组装时间必须是数字!");
-                            return false;
-                       }
-                    }
-                   
-                     if(weld_prevent_cm2!=""){
-                        if(!(/[0-9]/.test(weld_prevent_cm2))){
-                            swal("喷涂三防必须是数字!");
-                            return false;
-                        }
-                    }
-
-                    
-
-                    //数据库交互
+                }
+                //数据库交互
                 $.getJSON({  
                     type: "post",  
                     url:"../../json/2.json",  
@@ -588,19 +418,314 @@ $(function(){
                             showConfirmButton: false,
                             sleep : 20000
                         });  
-                        window.location.href="../../view/service/home.html";
+                        window.location.reload();
                         }
                     },  
                     success: function(status) {
                         console.log(status); 
                         if(status.weldproduct.state==200){
-                            swal({
+                           swal({
                                 title: "添加成功",
-                                type: "success",
-                                timer: 3000,
-                                showConfirmButton: false
-                            });  
-                            window.location.href="../../view/service/home.html";  
+                                text:"点击OK，进行下一步上传文件操作"
+                            },function(){
+                                $(".overlay_uplod").show();
+                                $(".file_uplod").show();
+
+                                var id = status.weldproduct.id;
+                                console.log(id);
+
+                                //上传pcb文件
+                                $(".add_pcb").on('click',function(sweetalert){
+                                    var  weld_pcb_file = $("#weld_pcb_file").val();
+                                    
+                                    //判断pcb文件
+                                    if(weld_pcb_file==""){
+                                        swal("PCB文件不能为空!");
+                                        return false;
+                                    }else{
+                                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                        var weld_pcb="0";
+                                        var newFileName = weld_pcb_file.split('.');
+                                        newFileName = newFileName[newFileName.length-1];
+                                        for(var i=0;i<fileTypes.length;i++){
+                                            if(fileTypes[i] == newFileName){
+                                                weld_pcb = "1";
+                                            }
+                                        }
+                                        if(weld_pcb == "0"){
+                                           swal("PCB文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                            return false;
+                                        }
+                                    }
+                                        
+                                    var pcb_data = {
+                                        "id" :id,
+                                        "weld_pcb_file" : weld_pcb_file
+                                    };
+                                    $.getJSON({  
+                                        type: "get",  
+                                        url:"../../json/2.json",  
+                                        data:pcb_data,// 序列化表单值  
+                                        async: false, 
+                                        cache:false,
+                                        dataType:"json", 
+                                        success: function(status) { 
+                                            console.log(status);
+                                            if(status.text==200){
+                                                $(".progress_pcb").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time1").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        $(".time1").html("上传PCB文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                        $(".prog").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }    
+                                            }
+                                            if(status.text!=200){
+                                                $(".progress_pcb").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time1").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        swal("上传PCB文件失败，请重新上传");
+                                                        $(".progress_pcb").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }    
+                                            }
+                                        },
+                                    });
+                                });
+
+                                //上传BOM的excel文件
+                                $(".add_bom").on('click',function(){
+                                    var weld_bom_file = $("#weld_bom_file").val();
+                                    
+                                    //ome判定
+                                     //判断bom文件
+                                    if(weld_bom_file==""){
+                                        swal("BOM不能为空!");
+                                        return false;
+                                    }else{
+                                         var fileTypes = new Array("xlsx","xls");  //定义可支持的文件类型数组
+                                        var weld_bomfile = "0";
+                                        var newFileName = weld_bom_file.split('.');
+                                        newFileName = newFileName[newFileName.length-1];
+                                        for(var i=0;i<fileTypes.length;i++){
+                                            if(fileTypes[i] == newFileName){
+                                                weld_bomfile = "1";
+                                            }
+                                        }
+                                        if(weld_bomfile == "0"){
+                                            swal("BOM文件必须是xlsx、xls！");
+                                            return false;
+                                        }
+                                    }
+
+                                    var bom_data = {
+                                        "id" :id,
+                                        "weld_bom_file" : weld_bom_file
+                                    };
+                                    $.getJSON({  
+                                        type: "get",  
+                                        url:"../../json/2.json",  
+                                        data:bom_data,// 序列化表单值  
+                                        async: false, 
+                                        cache:false,
+                                        dataType:"json", 
+                                        success: function(status) { 
+                                            console.log(status);
+                                            if(status.text==200){
+                                                $(".progress_bom").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time2").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        $(".time2").html("上传BOM文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                        $(".prog_bom").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }       
+                                            }
+                                            if(status.text!=200){
+                                                $(".progress_bom").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time2").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        swal("上传BOM文件失败，请重新上传");
+                                                        $(".progress_bom").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }    
+                                            }
+                                        },
+                                    });
+                                });
+
+                                 //上传坐标文件
+                                $(".add_coordinate").on('click',function(){
+                                    var  weld_coordinate_file = $("#weld_coordinate_file").val();
+                                    var dis = 0;
+
+                                    //判断坐标文件
+                                    if(weld_coordinate_file != ''){
+                                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                        var weld_coordinate = "0";
+                                        var newFileName = weld_coordinate_file.split('.');
+                                        dis = 1;
+                                        newFileName = newFileName[newFileName.length-1];
+                                        for(var i=0;i<fileTypes.length;i++){
+                                            if(fileTypes[i] == newFileName){
+                                                weld_coordinate = "1";
+                                            }
+                                        }
+                                        if(weld_coordinate == "0"){
+                                            swal("坐标文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                            return false;
+                                        }
+                                    }
+                
+                                    var coordinate_data = {
+                                        "id" :id,
+                                        "weld_coordinate_file" : weld_coordinate_file
+                                    }
+                                    if(dis == 0){
+                                        swal("请上传坐标文件！");
+                                        return false;
+                                    }
+                                    
+                                    $.getJSON({  
+                                        type: "get",  
+                                        url:"../../json/2.json",  
+                                        data:coordinate_data,// 序列化表单值  
+                                        async: false, 
+                                        cache:false,
+                                        dataType:"json", 
+                                        success: function(status) { 
+                                            console.log(status);
+                                            if(status.text==200){
+                                                $(".progress_coordinate").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time4").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        $(".time4").html("上传坐标文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                        $(".prog_coordinate").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }       
+                                            }
+                                            if(status.text!=200){
+                                                $(".progress_coordinate").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time4").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        swal("上传坐标文件失败，请重新上传");
+                                                        $(".progress_coordinate").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }    
+                                            }
+                                        },
+                                    });
+                                });
+
+                                //上传工艺文件
+                                $(".add_process").on('click',function(){
+                                    var   weld_process_file = $("#weld_process_file").val();
+                                    var dis_one = 0;
+                                    //工艺文件
+                                    if(weld_process_file != ''){
+                                        var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                        var weld_process = "0";
+                                        var newFileName = weld_process_file.split('.');
+                                        dis_one = 1;
+                                        newFileName = newFileName[newFileName.length-1];
+                                        for(var i=0;i<fileTypes.length;i++){
+                                            if(fileTypes[i] == newFileName){
+                                                weld_process = "1";
+                                            }
+                                        }
+                                        if(weld_process == "0"){
+                                            swal("工艺文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                            return false;
+                                        }
+                                    }
+                                     
+                                    var process_data = {
+                                        "id" :id,
+                                        "weld_process_file" : weld_process_file
+                                    };
+                                     
+                                     if(dis_one == 0){
+                                        swal("请上传工艺文件");
+                                        return false;
+                                     }
+                                    
+                                    $.getJSON({  
+                                        type: "get",  
+                                        url:"../../json/2.json",  
+                                        data:process_data,// 序列化表单值  
+                                        async: false, 
+                                        cache:false,
+                                        dataType:"json", 
+                                        success: function(status) { 
+                                            console.log(status);
+                                            if(status.text==200){
+                                                $(".progress_process").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time3").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        $(".time3").html("上传工艺文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                        $(".prog_process").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }       
+                                            }
+                                            if(status.text!=200){
+                                                $(".progress_process").show();
+                                                var timer=5;
+                                                var countdown = setInterval(CountDown,1000);
+                                                function CountDown(){
+                                                    $(".time3").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                    if(timer==0){
+                                                        swal("上传工艺文件失败，请重新上传");
+                                                        $(".progress_process").hide();
+                                                        clearInterval(countdown);
+                                                    }
+                                                    timer--;
+                                                }
+                                            }    
+                                        }
+                                    });
+                                    
+                                });
+
+                                //点击完成按钮
+                                $(".complete").on('click',function(){
+                                    window.location.reload();
+                                });
+
+                            }); 
                         }
                     }  
                 }); 
@@ -610,7 +735,7 @@ $(function(){
     /*weld产品信息填写业务逻辑编写*/
 
     /*修改焊接产品信息开始*/
-    $(".product_menu_weld_update").click(function(){
+    $(".product_menu_weld_update").on('click',function(){
         var productIds = [];
         var signs = $("input[name='sign']");
         $.each(signs,function(key,obj){
@@ -628,10 +753,10 @@ $(function(){
             success:function(result){
                 $(".overflow_weld").show();
                 $(".weld_details").show();
-                $(".cental_pro").click(function(){
+                $(".cental_pro").on('click',function(){
                     $(".overlay_one").hide();
                     $(".add_products").hide();
-                    window.location.href="../../view/service/home.html";
+                    window.location.reload();
                 });
                 //修改焊接订单
                 //焊接信息
@@ -645,30 +770,25 @@ $(function(){
                 $("#weld_pcba_stencil").val(result.weld_pcba_stencil);
                 $("#weld_pcba_stencil_number").val(result.weld_pcba_stencil_number);
                 $("#weld_test_time").val(result.weld_test_time);
-                $("#weld_assembly_time").val(result.weld_assembly_time);
                 $("#weld_prevent_cm2").val(result.weld_prevent_cm2);
                 $("#weld_remark").val(result.weld_remark);
 
                 //修改信息
-                $(".add_weld_product").click(function(sweetalert){
-                swal({
+                $(".add_weld_product").on('click',function(sweetalert){
+                    swal({
                         title: "",
-                        text: "您确定修改焊接产品吗？",
+                        text: "您确定添加此产品到产品列表吗？",
                         type: "warning",
                         showCancelButton: true,
                         confirmButtonColor: "#7B69B3",
                         confirmButtonText: "确定",
                         cancelButtonText: "取消",
                         closeOnConfirm: false
-                },function(isConfirm){
-                    if(isConfirm){
+                    },function(isConfirm){
+                        if(isConfirm){
                             //获取焊接订单新数据信息
                             var weld_product_name = $("#weld_product_name").val(),
                                 weld_product_type = $("#weld_product_type").val(),
-                                weld_pcb_file = $("#weld_pcb_file").val(),
-                                weld_coordinate_file = $("#weld_coordinate_file").val(),
-                                weld_process_file = $("#weld_process_file").val(),
-                                weld_bom_file = $("#weld_bom_file").val(),
                                 weld_pcba_process = $("#weld_pcba_process").val(),
                                 weld_pcba_smt_type = $("#weld_pcba_smt_type").val(),
                                 weld_pcba_smt_joints = $("#weld_pcba_smt_joints").val(),
@@ -677,127 +797,402 @@ $(function(){
                                 weld_pcba_stencil = $("#weld_pcba_stencil").val(),
                                 weld_pcba_stencil_number = $("#weld_pcba_stencil_number").val(),
                                 weld_test_time = $("#weld_test_time").val(),
-                                weld_assembly_time = $("#weld_assembly_time").val(),
                                 weld_prevent_cm2 = $("#weld_prevent_cm2").val(),
                                 weld_remark = $("#weld_remark").val(),
                                 product_class_type = $("#product_class_type").val();
-                                
+
                             //数据库json格式
                             var weld_data={
-                                    "productIds" : productIds,
-                                    "weld_product_name" : weld_product_name,
-                                    "weld_product_type" : weld_product_type,
-                                    "weld_pcb_file" : weld_pcb_file,
-                                    "weld_coordinate_file" : weld_coordinate_file,
-                                    "weld_process_file" : weld_process_file,
-                                    "weld_bom_file" : weld_bom_file,
-                                    "weld_pcba_process" : weld_pcba_process,
-                                    "weld_pcba_smt_type" : weld_pcba_smt_type,
-                                    "weld_pcba_smt_joints" : weld_pcba_smt_joints,
-                                    "weld_pcba_dip_type" : weld_pcba_dip_type,
-                                   "weld_pcba_dip_joints" : weld_pcba_dip_joints,
-                                    "weld_pcba_stencil" : weld_pcba_stencil,
-                                    "weld_pcba_stencil_number" : weld_pcba_stencil_number,
-                                    "weld_test_time" : weld_test_time,
-                                    "weld_assembly_time" : weld_assembly_time,
-                                   "weld_prevent_cm2" : weld_prevent_cm2,
-                                    "weld_remark" : weld_remark,
-                                    "product_class_type" : product_class_type
-                                };
+                                "weld_product_name" : weld_product_name,
+                                "weld_product_type" : weld_product_type,
+                                "weld_pcba_process" : weld_pcba_process,
+                                "weld_pcba_smt_type" : weld_pcba_smt_type,
+                                "weld_pcba_smt_joints" : weld_pcba_smt_joints,
+                                "weld_pcba_dip_type" : weld_pcba_dip_type,
+                                "weld_pcba_dip_joints" : weld_pcba_dip_joints,
+                                "weld_pcba_stencil" : weld_pcba_stencil,
+                                "weld_pcba_stencil_number" : weld_pcba_stencil_number,
+                                "weld_test_time" : weld_test_time,
+                                "weld_prevent_cm2" : weld_prevent_cm2,
+                                "weld_remark" : weld_remark,
+                                "product_class_type" : product_class_type,
+                                "now_time":now_time
+                            };
 
 
-                                //判断焊接信息不能为空的选项信息
-                                                
-                                if(weld_product_name=="" || weld_pcba_process=="" || weld_pcba_smt_type=="" || weld_pcba_dip_type==""){
-                                    swal("信息不能为空!");
-                                    return false;
-                                }
-                                if(weld_pcb_file==""){
-                                    swal("PCB文件不能为空!");
-                                    return false;
-                                }
-                                if(weld_bom_file==""){
-                                    swal("BOM不能为空!");
-                                    return false;
-                                }
-
-                                //判断产品编号以及钢网编号
-                                 //判断焊接点数、种类、组装时间
+                            //判断weld信息不能为空的选项信息
                                 
-                                if(!(/[0-9]/.test(weld_pcba_smt_joints)) || !(/[0-9]/.test(weld_pcba_dip_joints)) || !(/[0-9]/.test(weld_pcba_smt_type)) || !(/[0-9]/.test(weld_pcba_dip_type))){
-                                    swal("SMT和DIP的种类、焊接点数必须是数字!");
-                                    return false;
-                                }
-                                if(weld_product_type=="" || (/[\u4e00-\u9fa5]/.test(weld_product_type))){
-                                    swal("产品型号不能为空、汉字或全角符号！");
-                                    return false;
-                                }
-                                if(weld_pcba_stencil_number!=""){
-                                    if((/[\u4e00-\u9fa5]/.test(weld_pcba_stencil_number))){
-                                        swal("钢网编号不能为汉字或全角符号！");
-                                        return false;
-                                    }
-                                }
-                                //判断焊接点数、组装时间
-                                               
-                                if(weld_test_time!=""){
-                                   if(!(/[0-9]/.test(weld_test_time))){
-                                       swal("焊接产品测试时间必须是数字!");
-                                       return false;
-                                    }
-                                }
-                                if(weld_assembly_time!=""){
-                                    if(!(/[0-9]/.test(weld_assembly_time))){
-                                        swal("焊接产品组装时间必须是数字!");
-                                        return false;
-                                   }
-                                }
-                                
-                                 if(weld_prevent_cm2!=""){
-                                    if(!(/[0-9]/.test(weld_prevent_cm2))){
-                                        swal("喷涂三防必须是数字!");
-                                        return false;
-                                    }
-                                }
-
-                                //数据库交互
-                                $.getJSON({  
-                                    type: "post",  
-                                    url:"../../json/2.json",  
-                                    data:weld_data,// 序列化表单值  
-                                    async: false, 
-                                    cache:false,
-                                    dataType:"json", 
-                                    error: function(status) { 
-                                        console.log(status); 
-                                        if(status.weldproduct.state==0){
-                                            swal({
-                                                title: "添加失败!",
-                                                type: "error",
-                                                timer: 5000,
-                                                showConfirmButton: false,
-                                                sleep : 20000
-                                            });  
-                                            window.location.href="../../view/service/home.html";
-                                        }
-                                    },  
-                                    success: function(status) {
-                                        console.log(status); 
-                                        if(status.weldproduct.state==200){
-                                            swal({
-                                                title: "修改成功!",
-                                                type: "success",
-                                                timer: 3000,
-                                                showConfirmButton: false
-                                            });  
-                                            window.location.href="../../view/service/home.html";  
-                                        }
-                                     }  
-                                }); 
+                            if(weld_product_name=="" || weld_pcba_process=="" || weld_pcba_smt_type=="" || weld_pcba_dip_type==""){
+                                swal("信息不能为空!");
+                                return false;
                             }
+
+                            //判断焊接点数、组装时间
+                            if(!(/[0-9]/.test(weld_pcba_smt_joints)) || !(/[0-9]/.test(weld_pcba_dip_joints)) || !(/[0-9]/.test(weld_pcba_smt_type)) || !(/[0-9]/.test(weld_pcba_dip_type))){
+                                swal("SMT和DIP的种类、焊接点数必须是数字!");
+                                return false;
+                            }
+
+                            //判断产品编号以及钢网编号
+                            if(weld_product_type=="" || (/[\u4e00-\u9fa5]/.test(weld_product_type))){
+                                swal("产品型号不能为空、汉字或全角符号！");
+                                return false;
+                            }
+                            if(weld_pcba_stencil_number!=""){
+                                if((/[\u4e00-\u9fa5]/.test(weld_pcba_stencil_number))){
+                                    swal("钢网编号不能为汉字或全角符号！");
+                                    return false;
+                                }
+                            }
+
+                            //判断焊接点数、组装时间           
+                             if(weld_test_time!=""){
+                                if(!(/[0-9]/.test(weld_test_time))){
+                                    swal("焊接产品测试时间必须是数字!");
+                                    return false;
+                               }
+                            }
+                               
+                            if(weld_prevent_cm2!=""){
+                                if(!(/[0-9]/.test(weld_prevent_cm2))){
+                                    swal("喷涂三防必须是数字!");
+                                    return false;
+                                }
+                            }
+                            //数据库交互
+                            $.getJSON({  
+                                type: "post",  
+                                url:"../../json/2.json",  
+                                data:weld_data,// 序列化表单值  
+                                async: false, 
+                                cache:false,
+                                dataType:"json", 
+                                error: function(status) { 
+                                    console.log(status); 
+                                    if(status.weldproduct.state==0){
+                                        swal({
+                                        title: "添加失败!",
+                                        type: "error",
+                                        timer: 5000,
+                                        showConfirmButton: false,
+                                        sleep : 20000
+                                    });  
+                                    window.location.reload();
+                                    }
+                                },  
+                                success: function(status) {
+                                    console.log(status); 
+                                    if(status.weldproduct.state==200){
+                                       swal({
+                                            title: "添加成功",
+                                            text:"点击OK，进行下一步上传文件操作"
+                                        },function(){
+                                            $(".overlay_uplod").show();
+                                            $(".file_uplod").show();
+
+                                            var id = status.weldproduct.id;
+                                            console.log(id);
+                                            //上传pcb文件
+                                            $(".add_pcb").on('click',function(sweetalert){
+                                                var  weld_pcb_file = $("#weld_pcb_file").val();
+                                                
+                                                //判断pcb文件
+                                                if(weld_pcb_file==""){
+                                                    swal("PCB文件不能为空!");
+                                                    $(".add_pcb").attr('disabled',true);
+                                                    $(".add_pcb").css("background","#eee");
+                                                    return false;
+                                                }else{
+                                                     $(".add_pcb").attr('disabled',false);
+                                                    var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                                    var weld_pcb="0";
+                                                    var newFileName = weld_pcb_file.split('.');
+                                                    newFileName = newFileName[newFileName.length-1];
+                                                    for(var i=0;i<fileTypes.length;i++){
+                                                        if(fileTypes[i] == newFileName){
+                                                        weld_pcb = "1";
+                                                        　}
+                                                    }
+                                                    if(weld_pcb == "0"){
+                                                       swal("PCB文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                                        return false;
+                                                    }
+                                                }
+                                                    
+                                                var pcb_data = {
+                                                    "id" :id,
+                                                    "weld_pcb_file" : weld_pcb_file
+                                                };
+                                                $.getJSON({  
+                                                    type: "get",  
+                                                    url:"../../json/2.json",  
+                                                    data:pcb_data,// 序列化表单值  
+                                                    async: false, 
+                                                    cache:false,
+                                                    dataType:"json", 
+                                                    success: function(status) { 
+                                                        console.log(status);
+                                                        if(status.text==200){
+                                                            $(".progress_pcb").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time1").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    $(".time1").html("上传PCB文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                                    $(".prog").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }    
+                                                        }
+                                                        if(status.text!=200){
+                                                            $(".progress_pcb").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time1").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    swal("上传PCB文件失败，请重新上传");
+                                                                    $(".progress_pcb").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }    
+                                                        }
+                                                    },
+                                                });
+                                            });
+
+                                            //上传BOM的excel文件
+                                            $(".add_bom").on('click',function(){
+                                                var weld_bom_file = $("#weld_bom_file").val();
+                                                
+                                                //ome判定
+                                                 //判断bom文件
+                                                if(weld_bom_file==""){
+                                                    swal("BOM不能为空!");
+                                                    return false;
+                                                }else{
+                                                     var fileTypes = new Array("xlsx","xls");  //定义可支持的文件类型数组
+                                                    var weld_bomfile = "0";
+                                                    var newFileName = weld_bom_file.split('.');
+                                                    newFileName = newFileName[newFileName.length-1];
+                                                    for(var i=0;i<fileTypes.length;i++){
+                                                        if(fileTypes[i] == newFileName){
+                                                            weld_bomfile = "1";
+                                                        }
+                                                    }
+                                                    if(weld_bomfile == "0"){
+                                                        swal("BOM文件必须是xlsx、xls！");
+                                                        return false;
+                                                    }
+                                                }
+
+                                                var bom_data = {
+                                                    "id" :id,
+                                                    "weld_bom_file" : weld_bom_file
+                                                };
+                                                $.getJSON({  
+                                                    type: "get",  
+                                                    url:"../../json/2.json",  
+                                                    data:bom_data,// 序列化表单值  
+                                                    async: false, 
+                                                    cache:false,
+                                                    dataType:"json", 
+                                                    success: function(status) { 
+                                                        console.log(status);
+                                                        if(status.text==200){
+                                                            $(".progress_bom").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time2").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    $(".time2").html("上传BOM文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                                    $(".prog_bom").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }       
+                                                        }
+                                                        if(status.text!=200){
+                                                            $(".progress_bom").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time2").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    swal("上传BOM文件失败，请重新上传");
+                                                                    $(".progress_bom").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }    
+                                                        }
+                                                    },
+                                                });
+                                            });
+
+                                             //上传坐标文件
+                                            $(".add_coordinate").on('click',function(){
+                                                var  weld_coordinate_file = $("#weld_coordinate_file").val();
+                                                var dis = 0;
+
+                                                //判断坐标文件
+                                                if(weld_coordinate_file != ''){
+                                                    var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                                    var weld_coordinate = "0";
+                                                    var newFileName = weld_coordinate_file.split('.');
+                                                    dis = 1;
+                                                    newFileName = newFileName[newFileName.length-1];
+                                                    for(var i=0;i<fileTypes.length;i++){
+                                                        if(fileTypes[i] == newFileName){
+                                                            weld_coordinate = "1";
+                                                        }
+                                                    }
+                                                    if(weld_coordinate == "0"){
+                                                        swal("坐标文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                                        return false;
+                                                    }
+                                                }
+                            
+                                                var coordinate_data = {
+                                                    "id" :id,
+                                                    "weld_coordinate_file" : weld_coordinate_file
+                                                }
+                                                if(dis == 0){
+                                                    swal("请上传坐标文件！");
+                                                    return false;
+                                                }
+                                               
+                                                $.getJSON({  
+                                                    type: "get",  
+                                                    url:"../../json/2.json",  
+                                                    data:coordinate_data,// 序列化表单值  
+                                                    async: false, 
+                                                    cache:false,
+                                                    dataType:"json", 
+                                                    success: function(status) { 
+                                                        console.log(status);
+                                                        if(status.text==200){
+                                                            $(".progress_coordinate").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time4").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    $(".time4").html("上传坐标文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                                    $(".prog_coordinate").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }       
+                                                        }
+                                                        if(status.text!=200){
+                                                            $(".progress_coordinate").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time4").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    swal("上传坐标文件失败，请重新上传");
+                                                                    $(".progress_coordinate").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }    
+                                                        }
+                                                    },
+                                                });
+                                            });
+
+                                            //上传工艺文件
+                                            $(".add_process").on('click',function(){
+                                                var   weld_process_file = $("#weld_process_file").val();
+                                                var dis_one = 0;
+                                                //工艺文件
+                                                if(weld_process_file != ''){
+                                                    var fileTypes = new Array("rar","zip","tar","gzip","jar");  //定义可支持的文件类型数组
+                                                    var weld_process = "0";
+                                                    var newFileName = weld_process_file.split('.');
+                                                    dis_one = 1;
+                                                    newFileName = newFileName[newFileName.length-1];
+                                                    for(var i=0;i<fileTypes.length;i++){
+                                                        if(fileTypes[i] == newFileName){
+                                                            weld_process = "1";
+                                                        }
+                                                    }
+                                                    if(weld_process == "0"){
+                                                        swal("工艺文件必须是rar,zip,tar,gzip,jar压缩文件！");
+                                                        return false;
+                                                    }
+                                                }
+                                                 
+                                                var process_data = {
+                                                    "id" :id,
+                                                    "weld_process_file" : weld_process_file
+                                                };
+                                                 
+                                                 if(dis_one == 0){
+                                                    swal("请上传工艺文件");
+                                                    return false;
+                                                 }
+
+                                                $.getJSON({  
+                                                    type: "get",  
+                                                    url:"../../json/2.json",  
+                                                    data:process_data,// 序列化表单值  
+                                                    async: false, 
+                                                    cache:false,
+                                                    dataType:"json", 
+                                                    success: function(status) { 
+                                                        console.log(status);
+                                                        if(status.text==200){
+                                                            $(".progress_process").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time3").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    $(".time3").html("上传工艺文件成功").css({"font-size":"18px","color":"#00ff45"});
+                                                                    $(".prog_process").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }       
+                                                        }
+                                                        if(status.text!=200){
+                                                            $(".progress_process").show();
+                                                            var timer=5;
+                                                            var countdown = setInterval(CountDown,1000);
+                                                            function CountDown(){
+                                                                $(".time3").html("正在上传，请稍等,倒计时"+timer+"s");
+                                                                if(timer==0){
+                                                                    swal("上传工艺文件失败，请重新上传");
+                                                                    $(".progress_process").hide();
+                                                                    clearInterval(countdown);
+                                                                }
+                                                                timer--;
+                                                            }
+                                                        }    
+                                                    }
+                                                });
+                                            });
+                                            //点击完成按钮
+                                            $(".complete").on('click',function(){
+                                                window.location.reload();
+                                            });
+
+                                        }); 
+                                    }
+                                }  
+                            }); 
+                        }
                     });
                 })
-             }       
+                /*weld产品信息填写业务逻辑编写*/
+            }       
         });
         }else{
             swal("请选择一个产品进行修改!");
@@ -806,7 +1201,7 @@ $(function(){
     /*修改产品信息结束*/
 
     /*下单业务逻辑编写开始*/
-    $(".product_menu_weld_order").click(function(sweetalert){
+    $(".product_menu_weld_order").on('click',function(sweetalert){
         var productIds = [];
         var signs = $("input[name='sign']");
         $.each(signs,function(key,obj){
@@ -821,8 +1216,8 @@ $(function(){
             swal.close();
             $(".overflow_three1").show();
             $(".shop_orders").show();
-            $(".cental_pro").click(function(){
-                window.location.href="../../view/service/home.html";
+            $(".cental_pro").on('click',function(){
+                window.location.reload();
             });
 
             //展示产品信息列表开始
@@ -882,10 +1277,10 @@ $(function(){
             //展示产品信息列表结束
 
             //弹出快递
-            $(".add_delivery").click(function(){
+            $(".add_delivery").on('click',function(){
                 $(".overlay_tow").show();
                 $(".delivery").show();
-                $(".insert_delivery").click(function(){
+                $(".insert_delivery").on('click',function(){
                     var delivery=$("#delivery").val();
                     $(".overlay_tow").hide();
                     $(".delivery").hide();
@@ -895,11 +1290,11 @@ $(function(){
                 });
             });
 
-            $(".add_button").click(function(){
+            $(".add_button").on('click',function(){
                 $(".adress_information").toggle(10);
             });
             //弹出地址
-            $(".add_adres").click(function(){
+            $(".add_adres").on('click',function(){
                 $(".overlay_tow").show();
                 $(".addres").show();
                 //获取地址信息
@@ -942,7 +1337,7 @@ $(function(){
                     }  
                 }); 
                  //添加地址到下单也页面中
-               $(".insert_address").click(function(sweetalert){
+               $(".insert_address").on('click',function(sweetalert){
                     //隐藏弹出层
                     $(".overlay_tow").hide();
                     $(".addres").hide();
@@ -981,7 +1376,7 @@ $(function(){
             });
 
             //添加新地址
-           $(".appent_address").click(function(){
+           $(".appent_address").on('click',function(){
                 var province = $("#province").val(),
                     city = $("#city").val(),
                     district =$("#district").val(),
@@ -1043,7 +1438,7 @@ $(function(){
             });
 
             //生成订单
-            $(".sales_review").click(function(sweetalert){
+            $(".sales_review").on('click',function(sweetalert){
 
                 //需下单种类的数数组
                 var product_order_ids = [];
@@ -1149,7 +1544,7 @@ $(function(){
                         if(status.contact.state==200){
                             $(".shop_orders").hide();
                             $(".overflow_three1").hide();
-                            window.location.href="../../view/service/home.html";
+                            window.location.reload();
 
                         }else{
                             swal("c");
