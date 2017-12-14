@@ -35,6 +35,9 @@
             {"id":"15","number":"CY-17-0015","pooduct_name":"风扇","product_type":"中小型","product_question":"100"}
         
         ],
+        "select_one_product":[
+           {"id":"15","contract_no":"CY-17-0015","pooduct_name":"风扇","product_data":"2017/8/15","product_type":"中小型","contract_state":"已签收","product_question":"1000"}
+        ],
         "state":200
     }
 }

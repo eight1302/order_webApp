@@ -20,6 +20,8 @@
     },
     "weldproduct":{
         "state":200,
-        "info":"提交成功!"
-    }
+        "info":"提交成功!",
+        "id" : 1
+    },
+    "text" : 200
 }

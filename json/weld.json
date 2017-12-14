@@ -141,6 +141,9 @@
             "price" : "156",
             "remark" : "焊接"
             }
+      ],
+      "bom_tital" :[
+        {"numbering":"编号","name": "名称","type": "型号","encapsulation":"封装","bit_number":"位号","accuracy":"精度","brands" : "品牌","quantity" : "数量"}
       ],		
 	"state":200
 }

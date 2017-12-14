@@ -14,10 +14,15 @@
     		"pass":"123456"
     	},
     	"state":200
-    }
-    ,"oemproduct":{
+    },
+    "oemproduct":{
         "state":200,
         "info":"提交成功!"
-    }
+    },
+    "text":{
+        "state":200,
+        "info":"提交成功!"
+    },
+    "id" : 1
 }
 
