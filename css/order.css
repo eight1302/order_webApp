@@ -144,8 +144,7 @@
     height: 92%;
 }
 .order_main_weld{
-     height: 92%;
-	display: none;
+    height: 92%;
     padding: 0;
 }
 .oreder_operation{
@@ -206,80 +205,86 @@
     overflow: hidden;
 }
 .contract_no{
-	width: 12%;
+	width: 7%;
     text-align: center;
  	float: left;
  	overflow: hidden;
 }
 .data_order{
 	float: left;
-    width: 6%;
+    width: 7%;
+    text-align: center;
+    overflow: hidden;
+}
+.data_play{
+    float: left;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .product_name{
 	float: left;
-    width: 12%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .product_model{
 	float: left;
-    width: 12%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .product_quantity{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .tax{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .full_payment_rate{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .down_payment{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .clients_confirmation{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .order_status{
 	float: left;
-    width: 8%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .payment_status{
  	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .upload_payment{
 	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
 .contract_details{
  	float: left;
-    width: 6%;
+    width: 7%;
     text-align: center;
     overflow: hidden;
 }
@@ -288,7 +293,7 @@
 .data_detail_oem,.data_detail_weld{
     display: block;
     width: 100%;
-    height: 80%;
+    height: 88%;
     min-height: 70%;
     color: #03a9f4;
     overflow: auto;
@@ -700,63 +705,4 @@
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);  
     border-radius: 10px;  
     background-color: #F5F5F5;  
-}  
-  
-/*定义滑块 内阴影+圆角*/  
-.page-list::-webkit-scrollbar-thumb  
-{  
-    border-radius: 10px;  
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);  
-    background-color: #2b7eb7;  
-}  
-.page-list input {
-    border:1px solid #d5dade; 
-    text-align:center; 
-    width:62px; 
-    box-shadow:none;
 }
-.page-list li{ 
-    margin: 0;
-    min-width:28px; 
-    height:36px; 
-    line-height:36px; 
-    background:#fff; 
-    display:inline-block; 
-    font-size:12px; 
-    color:#555; 
-    text-align:center; 
-    cursor:pointer;
-    margin-bottom: -10px;
-    
-}
-.page-go-btn{ 
-    margin: 0;
-    min-width:28px; 
-    height:36px; 
-    line-height:36px; 
-    background:#fff; 
-    display:inline-block; 
-    font-size:14px; 
-    color:#2196f3; 
-    text-align:center; 
-    cursor:pointer;
-    margin-bottom: -10px;
-    
-}
-.page-go-btn:hover { 
-    background:#f7f7f7; 
-    color:#fff;
-}
-.page-left{
-    float: right;
-    height: 8%;
-    margin-top: -10px;
-}
-.page-go-btn{
-    background-color: #eee;
-}
-.page-list li:hover,.page-list li.active{ 
-    background:#eee; 
-    color:#000;
-}
-/*分页跳转结束*/

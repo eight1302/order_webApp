@@ -25,12 +25,59 @@
 	color: #f12314;
 	font-size: 18px;
 }
+.tips{
+	width: 35%;
+    float: left;
+    margin-left: 5%;
+    height: 53px;
+    margin-top: 5px;
+}
+.tow {
+    width: 25%;
+    float: left;
+    font-size: 10px;
+    color: #2196f3;
+    margin: auto;
+    text-align: center;
+    margin-top: -4px;
+}
+.round_red {
+    width: 15px;
+    height: 15px;
+    background: #2196f3;
+    font-size: 10px;
+    color: #fff;
+    line-height: 16px;
+    margin: auto;
+    margin-bottom: 5px;
+    border-radius: 100%;
+    margin: inherit;
+}
+.one {
+    margin-top: 10px;
+}
+.timeline_red {
+    position: absolute;
+    border-bottom: 1px solid #03a9f4;
+    margin-top: 17px;
+    width: 93%;
+}
 .data1,.data2{
 	width: 100px;
 	height: 25px;
 	border-radius: 10px;
 	border:none;
 	background-color: #eee;
+}
+.product_btn{
+	width: 85%;
+    height: 25px;
+    margin-top: 7px;
+    background: #1791c7;
+    cursor: pointer;
+    color: #fff;
+    border-radius: 15px;
+    line-height: 25px;
 }
 .product_all,.delivery_all{
 	width: 100%;
@@ -62,9 +109,9 @@
 	float: left;
 }
 .product_weld{
-	width: 80px;
+	width: 145px;
 	height: 30px;
-	background-color: #2196f3;
+	background-color: #03a9f4;
 	color: #fff;
 	border-radius: 20px;
 	cursor: pointer;
@@ -73,7 +120,7 @@
 
 }
 .product_oem{
-	width: 80px;
+	width: 145px;
 	height: 30px;
 	background-color: #03a9f4;
 	color: #fff;
@@ -94,9 +141,17 @@
 	margin-right: 10px;
 }
 .product_oem_add,.product_oem_updata{
-	width: 100%;
-	height: 100%;
+	top: 0;
+	left: 0;
+	display: none;
+	width: 95%;
+	margin-left: 2%;
+	height: 90%;
+	margin-top: 2%;
 	background: #edf0f5;
+	position: fixed;
+	z-index: 200;
+	border-radius: 6px 6px 0 0;
 }
 .product_menu_oem_order,.product_menu_weld_order{
     width: 60px;
@@ -147,6 +202,25 @@
 	background-color: #03A9F4;
 	color: #fff;
 	overflow: hidden;
+	line-height: 40px;
+}
+.product_tr_one{
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	background-color: #03A9F4;
+	color: #fff;
+	line-height: 40px;
+	overflow: hidden;
+}
+.product_tr_oem,.product_tr_weld{
+	text-align: center;
+	width: 100%;
+	height: 40px;
+	background-color: #03A9F4;
+	color: #fff;
+	overflow: hidden;
+	line-height: 40px;
 }
 .search_btn,.oem_search_btn{
 	width: 25px;
@@ -256,6 +330,7 @@
 .page-left{
 	float: right;
 	height: 8%;
+	margin-right: 80px;
 }
 .page-go-btn{
 	background-color: #eee;
@@ -267,15 +342,53 @@
 /*分页跳转结束*/
 
 /*添加产品信息开始*/
-.add_products,.orders_details,.oem_details,.orders,.weld_details,.orders_weld_details{
+.add_products,.orders_details,.oem_details,.orders,.orders_weld_details{
+    top: 0;
+    left: 0;
+    z-index: 200;
     display: block;
     position: absolute;
-    width: 100%;
-    height: 100%;
+    width: 95%;
+    height: 95%;
     background-color: #edf0f5;
     margin: auto;
     display: none;
-
+    position: fixed;
+    margin-left: 2%;
+    margin-top: 1.5%;
+    border-radius: 6px;
+}
+.weld_details{
+    top: 0;
+    left: 0;
+    z-index: 200;
+    display: block;
+    position: absolute;
+    width: 95%;
+    height: 75%;
+    background-color: #edf0f5;
+    margin: auto;
+    display: none;
+    position: fixed;
+    margin-left: 2%;
+    margin-top: 3.5%;
+    border-radius: 6px;
+}
+.file_uplod{
+	top: 0;
+    left: 0;
+    z-index: 200;
+    display: block;
+    position: absolute;
+    width: 70%;
+    height: 70%;
+    background-color: #edf0f5;
+    margin: auto;
+    display: none;
+    position: fixed;
+    margin-left: 13%;
+    margin-top: 6.5%;
+    border-radius: 6px;
 }
 .products_menu{
 	width: 100%;
@@ -284,6 +397,7 @@
     background-color: #139cda;
     font-size: 18px;
     color: #fff;
+    border-radius: 6px 6px 0 0;
 }
 .oem_product{
 	margin-left: 60px;
@@ -300,7 +414,6 @@
     min-width: 300px;
 }
 .weld{
-	display: none;
 	height: 98%;
     width: 100%;
 }
@@ -313,7 +426,7 @@
 }
 .detail{
 	width: 100%;
-	height: auto;
+	height: 78%;
 	border-radius: 0 0 6px 6px;
 }
 .oem{
@@ -321,17 +434,17 @@
     width: 100%;
 }
 .page_list_oem{
-	height: 85%;
+	height: 88%;
     overflow: auto;
 }
 .page_list_weld{
-	height: 85%;
+	height: 88%;
     overflow: auto;
 }
 .shop{
 	margin-top: 30px;
 	width: 100%;
-	height: 180px;
+	height: 220px;
 }
 .shopdetal{
 	margin-top: 15px;
@@ -340,7 +453,7 @@
 }
 .shop_1{
 	float: left;
-	width: 19%;
+	width: 49%;
 	height: 100%;
 	background-color: #fff;
 	border: 1px solid #c7dde6; 
@@ -377,12 +490,12 @@ label{
 	margin: auto;
 }
 .shop_2{
-	float: left;
-	width: 19%;
-	height: 100%;
-	background-color: #fff;	
-	border: 1px solid #c7dde6;  
-	margin-right: 1%;
+    float: left;
+    width: 48%;
+    height: 45%;
+    background-color: #fff;
+    border: 1px solid #c7dde6;
+    margin-right: 1%;;
 }
 .pcb_upload{
 	margin: auto;
@@ -392,24 +505,26 @@ label{
     text-align: center;
 }
 .shop_3{
-	float: left;
-	width: 19%;
-	height: 100%;
-	background-color: #fff;	
-	border: 1px solid #c7dde6;  
-	margin-right: 1%;
+    float: left;
+    width: 48%;
+    height: 47%;
+    background-color: #fff;
+    border: 1px solid #c7dde6;
+    margin-right: 1%;
+    margin-top: 1.5%;
 }
 .shop_4{
-	float: left;
-	width: 19%;
-	height: 100%;
-	background-color: #fff;
-	border: 1px solid #c7dde6;
-	margin-right: 1%; 	
+  	float: left;
+    width: 49%;
+    height: 47%;
+    background-color: #fff;
+    border: 1px solid #c7dde6;
+    margin-right: 1%;
+    margin-top: 1.5%;
 }
 .shopdetal_1{
 	float: left;
-	width: 32.5%;
+	width: 49%;
 	height: 100%;
 	background-color: #fff;
 	border: 1px solid #c7dde6;
@@ -421,24 +536,23 @@ label{
     margin-top: 10px;
 }
 .shopdetal_2{
-	float: left;
-	width: 19%;
-	height: 100%;
-	background-color: #fff;
-	border: 1px solid #c7dde6;
-	margin-right: 1%; 	
+    float: left;
+    width: 49%;
+    height: 45%;
+    background-color: #fff;
+    border: 1px solid #c7dde6;
+    margin-right: 1%;	
 }
 .shopdetal_3{
 	float: left;
-	width: 32.5%;
+	width: 50%;
 	height: 100%;
 	background-color: #fff;
-	border: 1px solid #c7dde6;
-	margin-right: 1%; 	
+	border: 1px solid #c7dde6;	
 }
 .shopdetal_4{
 	float: left;
-	width: 32%;
+	width: 50%;
 	height: 100%;
 	background-color: #fff;
 	border: 1px solid #c7dde6;
@@ -459,7 +573,37 @@ label{
     color: #fff;
     box-shadow: 0 0 5px #716c6c;
     cursor: pointer;
-    margin-top: 1%;
+    margin-top: 10px;
+}
+.add_pcb,.add_bom,.add_coordinate,.add_process{
+    width: 140px;
+    height: 30px;
+    line-height: 30px;
+    background: #139cda;
+    text-align: center;
+    margin-right: 20px;
+    border-radius: 20px;
+    margin-left: 40px;
+    color: #fff;
+    box-shadow: 0 0 5px #716c6c;
+    cursor: pointer;
+    margin-top: 10px;
+    margin: auto;
+}
+.complete{
+    width: 86px;
+    height: 30px;
+    line-height: 30px;
+    background: #139cda;
+    text-align: center;
+    margin-right: 20px;
+    border-radius: 20px;
+    margin-left: 4px;
+    color: #fff;
+    box-shadow: 0 0 5px #716c6c;
+    cursor: pointer;
+    margin-top: 0px;
+    font-size: 15px;
 }
 .cental_pro{
     width: 30px;
@@ -597,6 +741,7 @@ label{
     background-color: #139cda;
     font-size: 18px;
     color: #fff;
+    border-radius: 6px 6px 0 0 ;
 }
 .product_order_menu{
 	margin-left: 60px;
@@ -605,15 +750,20 @@ label{
     line-height: 60px;
 }
 .shop_orders{
+	left: 0;
+    top: 0;
     display: block;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    position: fixed;
+    width: 95%;
+    height: 95%;
     background-color: #edf0f5;
-    z-index: 9999;
+    z-index: 200;
     margin: auto;
     display: none;
     box-shadow: 0 0 10px #716c6c;
+    margin-left: 2%;
+    margin-top: 1.5%;
+    border-radius: 6px;
 }
 .product_order{
 	width: 100%;
@@ -707,7 +857,7 @@ label{
     top: 10%;
     left: 30%;
 }
-.insert_delivery,.insert_address{
+.insert_delivery,.insert_address,.bom_updata{
 	float: left;
     width: 90px;
     height: 30px;
@@ -720,6 +870,7 @@ label{
     color: #fff;
     box-shadow: 0 0 10px #716c6c;
     cursor: pointer;
+    margin-top: 10px;
 }
 .text::-webkit-input-placeholder{
 	color: #666;
@@ -796,4 +947,117 @@ label{
 
 .uplod_pcb,.uplod_coordinate,.uplod_process,.uplod_bom,.uplod_weld_pcb,.uplod_weld_bom,.uplod_weld_coordinate,.uplod_weld_process{
 	margin-top: 10%;
+}
+
+
+/*bom购买方*/
+.bom_div{
+    width: 98%;
+    height: 96%;
+    background: #efefef;
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 200;
+    margin-left: 1%;
+    margin-top: 1%;
+    border-radius: 6px;
+    box-shadow: 1px 1px 3px #e4e2e2;
+    display: none;
+}
+.om_procurement_info{
+    width: 98%;
+    height: 75%;
+    background: #fff;
+    margin: auto;
+    margin-top: 2%;
+}
+.bom_tip{
+	height: 40px;
+    line-height: 40px;
+    color: #e00808;
+    text-align: center;
+    font-size: 20px;
+}
+.product_tr_tow{
+	text-align: center;
+    height: 95%;
+    overflow: auto;
+}
+.product_tr_hree{
+    height: 40px;
+    line-height: 40px;
+}
+.product_tr_hree:nth-child(2n){
+	background: #f7f1f1;
+}
+.product_tr_hree:hover{
+	background-color: #dae8c8;
+}
+.progress_pcb{
+    background: #000;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 47%;
+    height: 45%;
+    z-index: 100;
+    margin-left: 1%;
+    display: none;
+}
+.progress_coordinate{
+    background: #000;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 47%;
+    height: 47%;
+    z-index: 100;
+    margin-left: 1%;
+    margin-top: 18.8%;
+    display: none;
+}
+.progress_process{
+    background: #000;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 48%;
+    height: 47%;
+    z-index: 100;
+    margin-left: 49%;
+    margin-top: 18.8%;
+    display: none;
+}
+.progress_bom{
+    background: #000;
+    filter: alpha(opacity=80);
+    opacity: 0.8;
+    display: none;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 48%;
+    height: 45%;
+    z-index: 100;
+    margin-left: 49%;
+    display: none;
+}
+.pro_des{
+	margin-top: 16%;
+    text-align: center;
+}
+.prog,.prog_bom,.prog_process,.prog_coordinate{
+	width: 90%;
+    margin-left: 5%;
+    color: #fff;
 }

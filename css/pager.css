@@ -1,16 +1,13 @@
-@charset "utf-8";
 ul {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 .pagination{
-	display: inline-block;
-    padding-left: 0;
-    margin: 10px 0;
-    border-radius: 4px;
-    float: right;
-    right: 50px;
+	display:inline-block;
+	padding-left:0;
+	margin:20px 0;
+	border-radius:4px
 }
 .pagination>li{display:inline}  
 .pagination>li>a,.pagination>li>span{
@@ -116,17 +113,15 @@ ul {
 	background-color:#fff;
 }
 .pageJump{
-    display: inline-block;
-    padding-left: 0;
-    border-radius: 4px;
-    vertical-align: top;
-    float: right;
-    margin-top: 20px;
-    margin-right: 20px;
+	display:inline-block;
+	padding-left:0;
+	margin:20px 10px;
+	border-radius:4px;
+	vertical-align:top;
 }
 .pageJump .button,.pageJump input{
 	font-size:16px;
-	padding:3px 10px;
+	padding:6px 12px;
 	margin-left:-1px;
 	line-height:1.42857143;
 	color:#337ab7;
@@ -135,9 +130,7 @@ ul {
 	border:1px solid #ddd
 }
 .pageJump input{
-	 width: 50px;
-    height: 30px;
-
+	width:20px;
 }
 .pageJump-lg .button,.pageJump-lg input{
 	padding:10px 16px;
