@@ -78,4 +78,22 @@ $(function(){
 	$("ul .weld-menu").on('click',function(){
 		window.location ="../weld_menu/home.html";
 	});
+
+    //退出页面全屏
+
+    
+
+	$(".fullscreen").on('click',function(){
+		var docElm = document.documentElement;
+        if(docElm.requestFullscreen) {
+            docElm.requestFullscreen();
+        } else if(docElm.mozRequestFullScreen) {
+            docElm.mozRequestFullScreen();
+        } else if(docElm.webkitRequestFullscreen) {
+            docElm.webkitRequestFullscreen();
+        } else if(docElm.msRequestFullscreen) {
+            docElm.msRequestFullscreen();
+        }
+	})
+	 
 });

@@ -248,45 +248,53 @@ $(function(){
                                 //oem订单信息
                                 //产品型号
                                 var html_product;
-                                html_product = '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_number+'</div>'+
-                                                '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_name+'</div>'+
-                                                '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.product_type_number+'</div>';
+                                html_product = '<div class="col-md-4 product_list">'+result.product_number+'</div>'+
+                                                '<div class="col-md-4 product_list">'+result.product_name+'</div>'+
+                                                '<div class="col-md-4 product_list">'+result.product_type_number+'</div>';
                                 $(".list_product").append(html_product);
 
                                 //产品pcb信息
                                 var html_pcb;
-                                html_pcb = '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_pcb_cmstart+'*'+result.oem_pcb_cmstop+'</div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.oem_pcb_layer+'</div></div></div></div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.oem_pcb_thickness+'</div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.oem_pcb_spray+'</div>'+
-                                            '<div class="col-md-3 product_list" data-field="product_id" data-align="center">'+result.oem_pcb_solder+'</div>';
+                                html_pcb = '<div class="col-md-3 product_list">'+result.oem_pcb_cmstart+'*'+result.oem_pcb_cmstop+'</div>'+
+                                            '<div class="col-md-2 product_list">'+result.oem_pcb_layer+'</div></div></div></div>'+
+                                            '<div class="col-md-2 product_list">'+result.oem_pcb_thickness+'</div>'+
+                                            '<div class="col-md-2 product_list">'+result.oem_pcb_spray+'</div>'+
+                                            '<div class="col-md-3 product_list">'+result.oem_pcb_solder+'</div>';
                                 $(".list_pcb").append(html_pcb);
 
                                 //下载按钮
                                 var html_downlod;
-                                html_downlod = '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="PCB下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;">PCB</div>'+
-                                            '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="坐标文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;">坐标</div>'+
-                                            '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="工艺文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: left;margin-top: 10px;">工艺</div>'+
-                                            '<div class="col-md-5 product_list" data-field="product_id" data-align="center" title="BOM文件下载" style="height: 30px;line-height: 30px;background: #03A9F4;border-radius: 10px;color: #fff;float: right;margin-top: 10px;">BOM</div>';   
+                                html_downlod = '<div class="col-md-5 pcb_downlode" title="PCB下载">'+
+                                                    '<a href="" target="_blank" id="pcb_down" style="color:#fff;">PCB</a>'+
+                                                '</div>'+
+                                            '<div class="col-md-5 coordinate_downlode" title="坐标文件下载">'+
+                                                '<a href="" target="_blank" id="coordinate_down" style="color:#fff;">坐标</a>'+
+                                            '</div>'+
+                                            '<div class="col-md-5 process_downlode" title="工艺文件下载">'+
+                                                '<a href="" target="_blank" id="process_down" style="color:#fff;">工艺</a>'+
+                                            '</div>'+
+                                            '<div class="col-md-5 bom_downlode" title="BOM文件下载">'+
+                                                '<a href="" target="_blank" id="bom_down" style="color:#fff;">BOM</a>'+
+                                            '</div>';   
                                 $(".list_downlod").append(html_downlod);
 
                                 //产品pcba清单
                                 var html_pcba;
-                                html_pcba = '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_process+'</div>'+
-                                            '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_type+'</div></div></div></div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_smt_joints+'</div>'+
-                                            '<div class="col-md-1 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_type+'</div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_dip_joints+'</div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil+'</div>'+
-                                            '<div class="col-md-2 product_list" data-field="product_id" data-align="center">'+result.pcba_stencil_num+'</div>';
+                                html_pcba = '<div class="col-md-2 product_list">'+result.pcba_process+'</div>'+
+                                            '<div class="col-md-1 product_list">'+result.pcba_smt_type+'</div></div></div></div>'+
+                                            '<div class="col-md-2 product_list">'+result.pcba_smt_joints+'</div>'+
+                                            '<div class="col-md-1 product_list">'+result.pcba_dip_type+'</div>'+
+                                            '<div class="col-md-2 product_list">'+result.pcba_dip_joints+'</div>'+
+                                            '<div class="col-md-2 product_list">'+result.pcba_stencil+'</div>'+
+                                            '<div class="col-md-2 product_list">'+result.pcba_stencil_num+'</div>';
                                 $(".list_pcba").append(html_pcba);
 
                                 //测试组装
                                 var html_text;
 
-                                html_text = '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.oem_test_time+'</div>'+
-                                            '<div class="col-md-4 product_list" data-field="product_id" data-align="center">'+result.oem_prevent_cm2+'</div>'+
-                                            '<div class="col-md-4 product_list" id="product_smark" data-field="product_id" data-align="center" title="'+result.oem_remark+'">'+
+                                html_text = '<div class="col-md-4 product_list">'+result.oem_test_time+'</div>'+
+                                            '<div class="col-md-4 product_list">'+result.oem_prevent_cm2+'</div>'+
+                                            '<div class="col-md-4 product_list" id="product_smark" title="'+result.oem_remark+'">'+
                                                 '<span class="remark" id="chuang_news">'+result.oem_remark+'</span>'+
                                             '</div>';
                                 $(".list_testing").append(html_text);
@@ -298,8 +306,94 @@ $(function(){
                                     }
                                 });
                             }
+
+                            //下载PCB文件
+                            $(".pcb_downlode").on('click',function(){
+                                 $.ajax({  
+                                    type: "get",  
+                                    url:"../../json/menu.json",  
+                                    async: false, 
+                                    cache:false,
+                                    dataType: "json",
+                                    success: function(status) {
+                                        console.log(status); 
+                                        if(status.state==200){
+                                            try{   
+                                                var a = document.getElementById("pcb_down");  
+                                                a.href=status.pcb;   
+                                            }catch(e){   
+                                            }   
+                                        }
+                                    }
+                                });
+                            });
+
+                            //下载工艺文件
+                            $(".process_downlode").on('click',function(){
+                                 $.ajax({  
+                                    type: "get",  
+                                    url:"../../json/menu.json",  
+                                    async: false, 
+                                    cache:false,
+                                    dataType: "json",
+                                    success: function(status) {
+                                        console.log(status); 
+                                        if(status.state==200){
+                                            try{   
+                                                var a = document.getElementById("process_down");  
+                                                a.href=status.pcb;   
+                                            }catch(e){   
+                                            }   
+                                        }
+                                    }
+                                });
+                            });
+
+                            //下载坐标文件
+                            $(".coordinate_downlode").on('click',function(){
+                                 $.ajax({  
+                                    type: "get",  
+                                    url:"../../json/menu.json",  
+                                    async: false, 
+                                    cache:false,
+                                    dataType: "json",
+                                    success: function(status) {
+                                        console.log(status); 
+                                        if(status.state==200){
+                                            try{   
+                                                var a = document.getElementById("coordinate_down");  
+                                                a.href=status.pcb;   
+                                            }catch(e){   
+                                            }   
+                                        }
+                                    }
+                                });
+                            });
+
+                            //下载bom文件
+                            $(".bom_downlode").on('click',function(){
+                                 $.ajax({  
+                                    type: "get",  
+                                    url:"../../json/menu.json",  
+                                    async: false, 
+                                    cache:false,
+                                    dataType: "json",
+                                    success: function(status) {
+                                        console.log(status); 
+                                        if(status.state==200){
+                                            try{   
+                                                var a = document.getElementById("bom_down");  
+                                                a.href=status.bom;   
+                                            }catch(e){   
+                                            }   
+                                        }
+                                    }
+                                });
+                            });
                         }
                     });
+
+                        
 
                     //获取bom表头以及bom信息
                     $.getJSON({
@@ -367,7 +461,6 @@ $(function(){
             swal("暂无数据！");
         }
     });
-
 
     
     //查询时间段的信息
