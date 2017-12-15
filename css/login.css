@@ -12,9 +12,29 @@ body{
 img{
 	margin: 0 auto;
 }
+.chome_down{
+	width: 140px;
+    height: 40px;
+    background: #25c9de;
+    float: right;
+    text-align: center;
+    margin-right: 40px;
+    line-height: 40px;
+    color: #fff;
+    border-radius: 20px;
+    cursor: pointer;
+}
+a{
+    text-decoration: none;
+    color: #fff;
+}
+a:hover{
+    text-decoration: none;
+    color: #fff;
+}
 .logo{
 	margin: 40px;
-	width: 356px;
+	width: 95%;
 	height: 52px;
 }
 .table{

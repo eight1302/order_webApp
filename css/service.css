@@ -41,6 +41,45 @@
     text-align: center;
     margin-top: -4px;
 }
+.pcb_downlode{
+    height: 30px;
+    line-height: 30px;
+    background: #03A9F4;
+    border-radius: 16px;
+    color: #fff;
+    text-align: center;
+    margin-right: 12.5%;
+}
+.coordinate_downlode{
+    height: 30px;
+    line-height: 30px;
+    background: #03A9F4;
+    border-radius: 16px;
+    color: #fff;
+    float: right;
+    text-align: center;
+}
+.process_downlode{
+    height: 30px;
+    line-height: 30px;
+    background: #03A9F4;
+    border-radius: 16px;
+    color: #fff;
+    float: left;
+    margin-top: 10px;
+    text-align: center;
+    margin-right: 12.5%;
+}
+.bom_downlode{
+    height: 30px;
+    line-height: 30px;
+    background: #03A9F4;
+    border-radius: 16px;
+    color: #fff;
+    float: right;
+    margin-top: 10px;
+    text-align: center;
+}
 .round_red {
     width: 15px;
     height: 15px;

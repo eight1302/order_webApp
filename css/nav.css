@@ -100,23 +100,25 @@ a:hover{
     z-index: 100;
     background: #fff;
     margin-left: 130px;
-    margin-top: -6%;
+    margin-top: 350px;
     position: absolute;
     display: none;
     opacity: 0.9;
     display: block;
+    top: 0;
 }
 .sale_ul>li:hover{
 	background: #2a7eb7;
 	color: #fff;
 }
 .order_contract_menu{
-   width: 167px;
+    top: 0;
+    width: 167px;
     height: 120px;
     z-index: 100;
     background: #fff;
     margin-left: 130px;
-    margin-top: -11%;
+    margin-top: 230px;
     position: absolute;
     display: none;
     opacity: 0.9;
@@ -127,13 +129,14 @@ a:hover{
 	color: #fff;
 }
 .server_order_menu{
-	display: block;
+    top: 0;
+    display: block;
     width: 167px;
     height: 120px;
     z-index: 100;
     background: #fff;
     margin-left: 130px;
-    margin-top: -13%;
+    margin-top: 170px;
     position: absolute;
     display: none;
     opacity: 0.9;
