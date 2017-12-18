@@ -106,9 +106,12 @@
     cursor: pointer;
     margin-left: 0.5%;
 }
+.page-data{
+    height: 98%;
+}
 .oem_contracts{
 	width: 100%;
-	height: 85%;
+	height: 88%;
 	overflow: auto;
 	text-align: center;
 }

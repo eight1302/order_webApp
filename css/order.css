@@ -293,7 +293,7 @@
 .data_detail_oem,.data_detail_weld{
     display: block;
     width: 100%;
-    height: 88%;
+    height: 90%;
     min-height: 70%;
     color: #03a9f4;
     overflow: auto;
@@ -663,11 +663,8 @@
     border-radius: 15px;
     float: left;
 }
-
-
-
 .page-data{
-    margin-top: 15px;
+    height: 98%;
 }
 .up_img{
     width: 90%;
@@ -685,7 +682,6 @@
     -webkit-user-select:none;
     -ms-user-select:none;
     user-select:none;
-    height: 90%;
     overflow: auto;
 }
 .page-list ul { 

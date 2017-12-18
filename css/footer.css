@@ -1,5 +1,9 @@
 @charset "utf-8";
 /*首页主页面样式*/
+footer{
+	width:93%;
+	height: 89%;
+}
 .main{
 	width: 100%;
 	margin-top: 10px;

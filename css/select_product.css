@@ -94,9 +94,12 @@
 	width: 8.4%;
 	float: left;
 }
+.page-data{
+    height: 98%;
+}
 .contracts{
 	width: 100%;
-	height: 85%;
+	height: 88%;
 	overflow: auto;
 }
 .contract_product{

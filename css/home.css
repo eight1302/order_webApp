@@ -291,18 +291,18 @@ nav{
 	min-width: 130px;
 	height: 100%;
 	float: left;
-	border-right: 1px solid #bfbfbf;
 }
 /*右侧页面设计*/
 footer{
-	width: 93.2%;
-    height: 100%;
+	width:93%;
+    height: 89%;
     background-color: #edf0f5;
     float: right;
     position: fixed;
     margin-left: 131px;
     min-width: 1200px;
     overflow-x: auto;
+    border-left: 1px solid #bfbfbf;
 }
 
 /*弹出消息页面设计*/
