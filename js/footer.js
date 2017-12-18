@@ -541,12 +541,13 @@ $(function(){
 
 
 	/*订单状态分析echarts饼状图展示消费   支付*/
+	var myChart1 = echarts.init(document.getElementById('mychart1'));
 	$.getJSON({
     	url:"../../json/3.json",
     	cache:false,
     	success:function(result,data){
     		if(result.order.state==200){
-    			var myChart1 = echarts.init(document.getElementById('mychart1'));
+    			
 				var trem1_option = {
 				    tooltip: {
 				        trigger: 'item',
@@ -597,12 +598,13 @@ $(function(){
 	
 
 	/*订单状态分析echarts饼状图展示消费  焊接状态*/
+	var myChart2 = echarts.init(document.getElementById('mychart2'));
 	$.getJSON({
     	url:"../../json/3.json",
     	cache:false,
     	success:function(result,data){
     		if(result.order.state==200){
-    			var myChart2 = echarts.init(document.getElementById('mychart2'));
+    			
 				var trem2_option = {
 				    tooltip: {
 				        trigger: 'item',
@@ -653,12 +655,13 @@ $(function(){
 
 	
 	/*订单状态分析echarts饼状图展示消费  完成状态*/
+	var myChart3 = echarts.init(document.getElementById('mychart3'));
 	$.getJSON({
     	url:"../../json/3.json",
     	cache:false,
     	success:function(result,data){
     		if(result.order.state==200){
-    			var myChart3 = echarts.init(document.getElementById('mychart3'));
+    			
 				var trem3_option = {
 				    tooltip: {
 				        trigger: 'item',
@@ -709,4 +712,10 @@ $(function(){
     	error:function(){}
 	});
 	//订单完成状态
+
+	window.onresize = function(){
+		myChart1.resize();
+		myChart2.resize();
+		myChart3.resize();
+	}
 });			

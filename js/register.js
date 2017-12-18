@@ -97,14 +97,6 @@ $(function(){
 		        }else{
 		        	$("#user_msg").hide();
 		        }
-
-		        //判断公司所在地
-		        if(provinces == ""){
-		        	swal("请完成表单填写！")
-		        	return false;
-		        }else{
-		        	$("#provinces_msg").hide();
-		        }
 		        
 		         //验证手机提交信息
 		        if(phone==""){

@@ -3,24 +3,7 @@ $(document).ready(function(){
 	/*
 	*判断页面窗口高度
 	*/
- 	var height=$(window).height();
-    	height=height-110;
-    	news=height-270;
-    var width=$(window).width();
-        width=width-132;
-    $("nav").css({ "height": height+"px"});
-    $("footer").css({ "height": height+"px"});
-    $("footer").css({ "width": width+"px"});
-    $("#new").css({ "height": news+"px"});
-    $(window).on('resize',function() {
-       var  height=$(window).height();
-            height=height-110;
-            news=height-200;
-        $("footer").css({"height": height+"px"});
-        $("footer").css({ "width": width+"px"});
-        $("#new").css({ "height": news+"px"});
-         window.location.reload();
-    });
+
 
     /**
 	部逻辑操作
