@@ -2,16 +2,12 @@
 <html lang="zh-CN">
   <head>
     <meta charset="utf-8">
-    <title>云智造</title>
+    <title>创元智造</title>
     <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../css/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="../css/register.css">
     <link rel="stylesheet" type="text/css" href="../css/jquery.idcode.css">
     <link rel="shortcut icon" href="cy.ico"/>
-    <script type="text/javascript" src="../js/sweetalert.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.min.js"></script>
-    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="../js/jquery.idcode.js"></script>
   </head>
   <body>
     <div class="login">
@@ -51,7 +47,7 @@
                          <label for="security">
                             <span class="table_label">验证码：</span>
                         </label>
-                        <input type="text" id="Txtidcode" class="txtVerification" / style="width: 100px;">
+                        <input type="text" id="Txtidcode" class="txtVerification" style="width: 100px;height: 30px;line-height: 30px;">
                         <span id="idcode"></span>
                         <div class="security_msg" id="security_msg">
                             <button type="button" id="btns">验证</button>
@@ -67,14 +63,10 @@
                               <span id="msg_company">请输入公司全称</span>
                         </div>
                     </div>
-                    <div class="provinces">
-                        <label for="provinces">
-                            <span class="table_label">所在省份：</span>
-                        </label>
-                        <input type="" name="" id="provinces" placeholder="请输入公司所在省份">
-                        <div class="provinces_msg" id="provinces_msg">
-                            <img src="../img/msg.png">
-                            <span id="msg_provinces">请输入公司所在省份</span>
+                    <div id="distpicker4" class="provinces" style="width: 58%;">
+                        <div class="form-group">
+                            <label for="province">所在省份：</label>
+                            <select class="form-control" id="provinces" value="" style="width: 70.3%;"></select>
                         </div>
                     </div>
                     <div class="pass">
@@ -166,6 +158,13 @@
     		<span>创元成业电子科技有限公司</span>
     	</div>
     </div>
+    <script type="text/javascript" src="../js/sweetalert.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.min.js"></script>
+    <script type="text/javascript" src="../js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="../js/jquery.idcode.js"></script>
+    <script type="text/javascript" src="../js/distpicker.data.js"></script>
+    <script type="text/javascript" src="../js/distpicker.js"></script>
+    <script type="text/javascript" src="../js/main.js"></script>
     <script type="text/javascript" src="../js/register.js"></script>
   </body>
 </html>
