@@ -1,4 +1,4 @@
-/*
+﻿/*
 * 个人中心业务逻辑编写
 * author：xiaominzhang
 * time: 2017/11/20
@@ -7,16 +7,16 @@ $(function(){
 	//获取个人中心的信息
 	$.getJSON({  
        	type: "GET",
-       	url:"../../json/person.json",  
+       	url:"/user/info",  
        	async: false, 
        	cache:false,
        	dataType:"json", 
        	success: function(status) {
 
       	    console.log(status); 
-       	    if(status.data.state==200){
+       	    if(status.code==1){
        	        //基本信息
-       	        $(".avatar-view").append('<img src="'+status.data.head_img+'" style="width: 100%;height: 100%;border-radius: 100%;">');
+       	        $(".avatar-view").append('<img src="'+status.data.head_img+'" style="width: 80px;height: 80px;margin-top:10%;border-radius: 100%;">');
        	        $("#basic_numbering").text(status.data.basic_numbering);
        	        $("#basic_ompany").val(status.data.basic_ompany);
        	        $("#basic_phone").val(status.data.basic_phone);
@@ -39,25 +39,25 @@ $(function(){
 
 				$.each(status.data.person_address, function(idx,obj){
                     var person_address_html;
-                        person_address_html='<div class="col-md-3 address_list">'+
+                        person_address_html='<div class="col-md-3 col-sm-12 col-xs-12 address_list">'+
                         	'<div class="col-md-12" style="margin-top: 15px;">'+
                         		'<span style="float: left;">'+obj.name+'（收）</span>'+
                         		'<span style="float: right;">'+obj.phone+'</span>'+
                         	'</div>'+
-                        	'<div class="address col-md-12">'+
+                        	'<div class="address col-md-12 col-sm-12 col-xs-12">'+
                         		'<span>'+obj.encapsulation+'</span>'+
                         	'</div>'+
-                        	'<div class="col-md-12">'+
-                        		'<div class="col-md-6">'+
+                        	'<div class="col-md-12 col-sm-12 col-xs-12">'+
+                        		'<div class="col-md-6 col-sm-6 col-xs-6">'+
                         			'<div class="col-md-12 check" id="'+obj.id+'" start="'+obj.st+'">'+
                         				'<span>默认地址</span>'+
                         			'</div>'+
                         		'</div>'+
-                        		'<div class="col-md-6">'+
-                        			'<div class="col-md-6 edit" id="'+obj.id+'">'+
+                        		'<div class="col-md-6 col-sm-6 col-xs-6">'+
+                        			'<div class="col-md-6 col-sm-6 col-xs-6 edit" id="'+obj.id+'">'+
                         				'<span class="icon-edit" style="font-size: 20px;line-height: 30px;"></span>'+
                         			'</div>'+
-                        			'<div class="col-md-6 delete" id="'+obj.id+'">'+
+                        			'<div class="col-md-6 col-sm-6 col-xs-6 delete" id="'+obj.id+'">'+
                         				'<span class="icon-trash"  style="font-size: 20px;line-height: 30px;"></span>'+
                         			'</div>'+
                         		'</div>'+
@@ -67,16 +67,16 @@ $(function(){
                     if(obj.st == "1"){
                     	var moren;
                     	moren=
-                    	'<div  class="col-md-3" style="padding: 0;">'+
-	                    	'<span style="color: red;font-size: 10px;margin-right:10px;">(默认收货地址)</span>'+
+                    	'<div  class="col-md-3 col-sm-3 col-xs-3" style="padding: 0;">'+
+	                    	'<span style="color: red;font-size: 10px;margin-right:10px;">(默认)</span>'+
 	                    	'<label>联系人姓名：</label>'+
 	                    	'<span class="person_name">'+obj.name+'&nbsp;&nbsp;&nbsp;<i>(收)</i></span>'+
 	                    '</div>'+
-	                    '<div class="col-md-3"  style="padding: 0;">'+
+	                    '<div class="col-md-3  col-sm-3 col-xs-3"  style="padding: 0;">'+
 	                    	'<label>电话号码：</label>'+
 	                    	'<span class="phone">'+obj.phone+'</span>'+
 	                    '</div>'+
-	                    '<div class="col-md-6"  style="padding: 0;">'+
+	                    '<div class="col-md-6  col-sm-6 col-xs-6"  style="padding: 0;">'+
 	                    	'<label>收货地址：</label>'+
 	                    	'<span class="address">'+obj.encapsulation+'</span>'+
 	                    '</div>';
@@ -105,17 +105,13 @@ $(function(){
 		};
 		//数据库交互
         $.getJSON({  
-            type: "post",  
-            url:"../../json/1.json",  
-          	data:data_acqu,// 序列化表单值  
+            url:"/user/defaultAddr?id="+id,  
             async: false, 
             cache:false,
             dataType:"json", 
             success: function(status) {
                 console.log(status); 
-                if(status.oemproduct.state==200){
-                 	window.location.href="../../view/person/home.html";
-                }
+                 	window.location.reload();
             }  
         }); 
 	});
@@ -160,29 +156,26 @@ $(function(){
             }) ; 
         });
         $(".up_btn").on('click',function(){
-        	
+        	var fd = new FormData();
         	var file = $("#file").val();
-            console.log(file);
+            fd.append("file", $("#file").get(0).files[0]);
             if(file == ""){
                 $(".text_info").show();
                 return false;
             }
-
-            var up_data={
-                "file" : file
-            };
             $.getJSON({  
-                type: "get",  
-                url:"../../json/oem_contrat_detail.json",
+                type: "POST",  
+                url:"/user/uploadHeadImg",
                 async: false, 
                 cache:false,
-                data : up_data,
-                dataType:"json", 
+                processData: false,
+                contentType: false,
+                data : fd,
                 success: function(status) {
                     console.log(status); 
-                    if(status.data.state==200){
+                   // if(status.data.state==200){
                         window.location.reload();//页面刷新
-                    } 
+                   // } 
                 }  
             });
         });
@@ -208,8 +201,8 @@ $(function(){
 		}
 
 		//判断qq
-		if(basic_qq == "" || !(/^[1-9][0-9]{4,15}$/.test(basic_qq))){
-			swal("qq号格式不对！");
+		if(basic_qq == ""){
+			swal("用户姓名不能为空！");
 			return false;
 		}
 
@@ -229,16 +222,17 @@ $(function(){
 		};
 
 		//数据库交互
-        $.getJSON({  
+        $.ajax({  
             type: "post",  
-            url:"../../json/1.json",  
-          	data:data_basic,// 序列化表单值  
+            contentType: 'application/json',
+            url:"/user/update",  
+          	data:JSON.stringify(data_basic),// 序列化表单值  
             async: false, 
             cache:false,
             dataType:"json", 
             error: function(status) { 
                 console.log(status); 
-                if(status.oemproduct.state==0){
+                if(status.code==0){
                     swal({
                         title: "添加失败!",
                         type: "error",
@@ -251,9 +245,9 @@ $(function(){
             },  
             success: function(status) {
                 console.log(status); 
-                if(status.oemproduct.state==200){
+                if(status.code==1){
                     swal({
-	                    title: status.oemproduct.info,
+	                    title: '保存成功',
 	                    type: "success",
 	                    timer: 3000,
 	                    showConfirmButton: false
@@ -307,16 +301,17 @@ $(function(){
 		};
 
 		//数据库交互
-        $.getJSON({  
+        $.ajax({  
             type: "post",  
-            url:"../../json/1.json",  
-          	data:data_vat,// 序列化表单值  
+            contentType: 'application/json',
+            url:"/user/update", 
+          	data:JSON.stringify(data_vat),// 序列化表单值  
             async: false, 
             cache:false,
             dataType:"json", 
             error: function(status) { 
                 console.log(status); 
-                if(status.oemproduct.state==0){
+                if(status.code==0){
                     swal({
                         title: "添加失败!",
                         type: "error",
@@ -329,9 +324,9 @@ $(function(){
             },  
             success: function(status) {
                 console.log(status); 
-                if(status.oemproduct.state==200){
+                if(status.code==1){
                     swal({
-	                    title: status.oemproduct.info,
+	                    title: '保存成功',
 	                    type: "success",
 	                    timer: 3000,
 	                    showConfirmButton: false
@@ -367,16 +362,17 @@ $(function(){
 		};
 
 		//数据库交互
-        $.getJSON({  
+        $.ajax({  
             type: "post",  
-            url:"../../json/1.json",  
-          	data:data_billing,// 序列化表单值  
+            url:"/user/update",  
+            contentType: 'application/json',
+          	data:JSON.stringify(data_billing),// 序列化表单值  
             async: false, 
             cache:false,
             dataType:"json", 
             error: function(status) { 
                 console.log(status); 
-                if(status.oemproduct.state==0){
+                if(status.code==0){
                     swal({
                         title: "添加失败!",
                         type: "error",
@@ -384,19 +380,19 @@ $(function(){
                         showConfirmButton: false,
                         sleep : 20000
                     });  
-                    window.location.href="../../view/person/home.html";
+                    window.location.reload();
                 }
             },  
             success: function(status) {
                 console.log(status); 
-                if(status.oemproduct.state==200){
+                if(status.code==1){
                     swal({
-	                    title: status.oemproduct.info,
+	                    title: '保存成功',
 	                    type: "success",
 	                    timer: 3000,
 	                    showConfirmButton: false
                 	});  
-                 	window.location.href="../../view/person/home.html";
+                    window.location.reload();
                 }
             }  
         }); 
@@ -410,17 +406,12 @@ $(function(){
 		};
 		//数据库交互
 	    $.getJSON({  
-	        type: "post",  
-	        url:"../../json/1.json",  
-	        data:delete_id,// 序列化表单值  
+	        url:"/user/delAddress?id="+id,  
 	        async: false, 
 	        cache:false,
 	        dataType:"json",
 	        success: function(status) {
-	            console.log(status); 
-	            if(status.oemproduct.state==200){
-	                window.location.href="home.html";
-	            }
+	            	window.location.reload();
 	        }  
 	    }); 
 	});
@@ -434,9 +425,7 @@ $(function(){
 		$(".overlay_num1").show();
 		$(".new_address").show();
 		$.getJSON({  
-	        type: "GET",  
-	        url:"../../json/edit_address.json",  
-	        data:edit_id,// 序列化表单值  
+	        url:"/user/editAddr?id="+id,  
 	        async: false, 
 	        cache:false,
 	        dataType:"json",
@@ -448,13 +437,13 @@ $(function(){
 					$(".new_address").hide();
 					//点击取消，退出
 				});
-	            if(status.data.state==200){
+	            if(status.code==1){
 	                $("#new_name").val(status.data.name);
 	                $("#new_phone").val(status.data.phone);
 	                $("#province").val(status.data.province);
 	                $("#city").val(status.data.city);
 	                $("#district").val(status.data.district);
-	                $("#new_detail").text(status.data.new_detail);
+	                $("#new_detail").text(status.data.encapsulation);
 	            }
 	            $(".add_new").on('click',function(sweetalert){
 					var new_name = $("#new_name").val(),
@@ -492,26 +481,27 @@ $(function(){
 						}
 
 					var edit_data = {
-						"new_name" : new_name,
-						"new_phone" : new_phone,
+						"name" : new_name,
+						"phone" : new_phone,
 						"province" : province,
 						"city" : city,
 						"district" : district,
-						"new_detail" : new_detail,
+						"encapsulation" : new_detail,
 						"id" : id
 					}
 
 					//数据库交互
-			        $.getJSON({  
+			        $.ajax({  
 			            type: "post",  
-			            url:"../../json/1.json",  
-			          	data:edit_data,// 序列化表单值  
+			            url:"/user/address",
+			            contentType: 'application/json',
+			          	data:JSON.stringify(edit_data),// 序列化表单值  
 			            async: false, 
 			            cache:false,
 			            dataType:"json", 
 			            error: function(status) { 
 			                console.log(status); 
-			                if(status.oemproduct.state==0){
+			                if(status.code==0){
 			                    swal({
 			                        title: "添加失败!",
 			                        type: "error",
@@ -524,9 +514,9 @@ $(function(){
 			            },  
 			            success: function(status) {
 			                console.log(status); 
-			                if(status.oemproduct.state==200){
+			                if(status.code==1){
 			                    swal({
-				                    title: status.oemproduct.info,
+				                    title: '修改成功',
 				                    type: "success",
 				                    timer: 3000,
 				                    showConfirmButton: false
@@ -580,25 +570,26 @@ $(function(){
 
 			//数据格式转换
 			var data_new_address = {
-				"new_name" : new_name,
-				"new_phone" : new_phone,
+				"name" : new_name,
+				"phone" : new_phone,
 				"province" : province,
 				"city" : city,
 				"district" : district,
-				"new_detail" : new_detail
+				"encapsulation" : new_detail
 			};
 
 			//数据库交互
-	        $.getJSON({  
+	        $.ajax({  
 	            type: "post",  
-	            url:"../../json/1.json",  
-	          	data:data_new_address,// 序列化表单值  
+	            url:"/user/address", 
+	            contentType: 'application/json',
+	          	data:JSON.stringify(data_new_address),// 序列化表单值  
 	            async: false, 
 	            cache:false,
 	            dataType:"json", 
 	            error: function(status) { 
 	                console.log(status); 
-	                if(status.oemproduct.state==0){
+	                if(status.code==0){
 	                    swal({
 	                        title: "添加失败!",
 	                        type: "error",
@@ -611,9 +602,9 @@ $(function(){
 	            },  
 	            success: function(status) {
 	                console.log(status); 
-	                if(status.oemproduct.state==200){
+	                if(status.code==1){
 	                    swal({
-		                    title: status.oemproduct.info,
+		                    title: '添加成功',
 		                    type: "success",
 		                    timer: 3000,
 		                    showConfirmButton: false

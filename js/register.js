@@ -1,4 +1,4 @@
-/*
+﻿/*
 *注册业务逻辑编写
 *auth@xiaomin.zhang
 *time 2017-10-21
@@ -14,7 +14,7 @@ $(function(){
 		var IsBy = $.idcode.validateCode();
 		var phone=$("#phone").val();
 		if(IsBy == false){
-			swal("请输入验证码");
+			swal("请输入验证码");      
 			return false;
 		}
 		if(phone=="" || !(/^1[34578]\d{9}$/.test(phone))){
@@ -42,12 +42,13 @@ $(function(){
 		if(IsBy == true){
 			$.ajax({
 				type:"post",
-				url:"", //获取验证码接口
-				data:data_phone,
+				url:"/sendSms", //获取验证码接口
+				data:JSON.stringify(data_phone),
+				 contentType: 'application/json',
 				 cache:false,
 				dataType:"json",
 				success : function(data){
-					if(data.status==1){
+					if(data.code==1){
 						//验证码已发送
 						swal("验证码已发送，请在30分钟内完成验证码填写！");
 						//倒计时
@@ -87,6 +88,7 @@ $(function(){
 		        } else {
 					checkbox="0";
 					swal("请阅读相关协议且同意协议内容");
+					return false;
 		        }
 		       //弹出框提示
 		        //验证用户名提交信息
@@ -158,26 +160,28 @@ $(function(){
 
 		        //数据json表单
 		        data={
-		        	"user" : user,
-		        	"phone" : phone,
-		        	"pass" : pass,
-		        	"pass_confirm" : pass_confirm,
-		        	"checkbox" : checkbox,
-		        	"provinces" : provinces
+		        		"user":user,
+			        	"basic_phone":phone,
+			        	"security":security,
+			        	"pass":pass,
+			        	"basic_ompany":company,
+			        	"pass_confirm":pass_confirm,
+			        	"province" : provinces
 		        };
 		        //数据提交
 		        $.ajax({  
-                	type: "post",  
-               	 	url:"SearchInfo/QueryMoreInfo",  
-                	data:data,// 序列化表单值  
+		        	type: "post",  
+               	 	url:"/register",  
+               	   contentType: 'application/json',
+                	data:JSON.stringify(data),// 序列化表单值  
                 	async: false, 
                 	 cache:false,
                 	dataType:"json", 
-                	error: function(status=1) { 
+                	error: function() { 
                 		console.log(status); 
                 		if(status==0){
                 			swal({
-                			title: "登录失败!",
+                			title: "注册失败!",
 				            type: "error",
 				            timer: 5000,
 				            showConfirmButton: false,
@@ -186,16 +190,17 @@ $(function(){
                     	window.location.href="";  
                 		}
                 	},  
-                	success: function(status=1) {
-                		console.log(status); 
-                		if(status==1){
+                	success: function() {
+                		if(status.code==1){
                 			swal({
-                			title: "登录成功!",
+                			title: "注册成功!",
 				            type: "success",
 				            timer: 5000,
 				            showConfirmButton: false
                 		});  
-                    	window.location.href="";  
+                    	window.location.href="./login.html";  
+                		}else{
+                			swal(status.msg);
                 		}
                 	}  
             	}); 

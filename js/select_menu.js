@@ -1,132 +1,90 @@
-/*
+﻿/*
 *time 2017.12.5
 *auth xiaominzhang
 *返修订单选择
 */
+//表单数据
+
+function uploadFile(fileId,ftype,types){
+	  var oem_pcb_file = $("#"+fileId).val();
+      if(oem_pcb_file==''){
+          swal(ftype+"文件不能为空!");
+          return false;
+      }else{
+    	  var fileTypes = types.split(",");
+         // var fileTypes = new Array("rar","zip","tar","gzip","jar");
+			// //定义可支持的文件类型数组
+          var oem_pcb="0";
+          var newFileName = oem_pcb_file.split('.');
+          newFileName = newFileName[newFileName.length-1];
+          for(var i=0;i<fileTypes.length;i++){
+              if(fileTypes[i] == newFileName){
+              　									　oem_pcb = "1";
+              }
+          }
+          if(oem_pcb == "0"){
+              swal(ftype+"文件必须是"+types);
+              return false;
+          }
+      }   
+  	  var fd = new FormData();
+      fd.append("file", $("#"+fileId).get(0).files[0]);
+
+      var picUrl;
+      $.getJSON({  
+          type:"post",
+    	    data:fd,// 序列化表单值
+          url:"/repair/upload",  
+          async: false, 
+          cache:false,
+          processData: false,
+          contentType: false, 
+          success: function(status) { 
+        	  picUrl= status.msg;
+          }
+      });
+      return picUrl;
+}
+
+function drawTableSaleOrder(obj){
+    var html ='<div class="contract_product">'+
+        '<div class="col-md-2 col-xs-2 col-sm-2 contract_no">'+obj.contract_no+'</div>'+
+        '<div class="col-md-2 col-xs-2 col-sm-2 product_data">'+obj.data_order+'</div>'+
+		    '<div class="col-md-2 col-xs-2 col-sm-2 product_type">'+obj.type+'</div>'+
+        '<div class="col-md-2 col-xs-2 col-sm-2 contract_state">'+obj.order_status+'</div>'+
+        '<div class="col-md-2 col-xs-2 col-sm-2 product_quantity">'+obj.product_quantity+'</div>'+
+        '<div class="col-md-2 col-xs-2 col-sm-2 selcet_pro">'+
+            '<div class="selcet_btn" select_menu_product="'+obj.id+'">选择产品</div>'+
+        '</div>'+
+    '</div>';
+    $(".contracts").append(html);
+    DataTime()
+}
+
 $(function(){
 
-	//加载返修流程信息
-	$.getJSON({  
-        type: "get",  
-        url:"../../json/select_menu.json",  
-        async: false, 
-        cache:false,
-        dataType:"json", 
-        success: function(status) {
-            console.log(status); 
-            if(status.data.state==200){
-            	/*加载预付款流程信息*/
-               	$.each(status.data.timeline_red, function(idx,obj){
-                    var timeline_red;
-                    timeline_red='<div class="tow">'+
-                        			'<div class="round_red">'+
-                        				'<span>'+obj.num+'</span>'+
-                        			'</div>'+
-                        			'<span class="one">'+obj.title+'</span>'+
-                        		'</div>';
-                    $(".red_detail").append(timeline_red);
-                }); 
-            }
-        }  
-    }); 
+	
 
     //展示返修产品列表
-    $.getJSON({  
-        type: "get",  
-        url:"../../json/select_menu_product.json",  
-        async: false, 
-        cache:false,
-        dataType:"json", 
-        success: function(status) {
-            console.log(status); 
-            if(status.data.state==200){
-            	/*加载预付款流程信息*/
-               	$.each(status.data.select_menu_product, function(idx,obj){
-                    var select_menu_product;
-                   	select_menu_product = '<div class="contract_product">'+
-                   							'<div class="contract_no">'+obj.contract_no+'</div>'+
-                   							'<div class="pooduct_name">'+obj.pooduct_name+'</div>'+
-                   							'<div class="product_data">'+obj.product_data+'</div>'+
-                   							'<div class="product_type">'+obj.product_type+'</div>'+
-                   							'<div class="contract_state">'+obj.contract_state+'</div>'+
-                   							'<div class="product_quantity">'+obj.product_question+'</div>'+
-                   							'<div class="selcet_btn" select_menu_product="'+obj.id+'">选择返修产品</div>'+
-                   						'</div>';
-                    $(".contracts").append(select_menu_product);
-                }); 
-                var content=40;       //总数
-	          	var pagesize=14;                            //每页显示数据14条
-	          	var pageTotal=Math.ceil(content/pagesize);  //分页数量
-	          	$(".page-left").append('<ul class="pagination" id="page2"></ul>');
-	          	Page({
-	            	num:pageTotal,             //页码数
-	            	startnum:1,
-	            	pagesize:14,             //每页显示的数量
-	            	elem:$('#page2'),       //指定的元素
-	            	callback:function(n){   //回调函数 
-	                	console.log(n);     
-	            	}
-	          	});
-            }
-        }  
-    });
+    renderOemOrderTable()
 
     //查询合同信息
     $(".con_btn").on('click',function(){
     	var contract_no = $("#contract_no").val();
-    	if(contract_no == "" || !(/[A-Z]-[0-9]{2}-[0-9]{4}/.test(contract_no))){
+    	if(contract_no == "" || !(/[A-Z][0-9]{5}/.test(contract_no))){
+    		return false;
+    	}
+    	var type = $("#type").val();
+    	if(type == ""){
     		return false;
     	}
     	//展示返修产品列表
-    	
-	    $.getJSON({  
-	        type: "get",  
-	        url:"../../json/select_menu_product.json",  
-	        async: false, 
-	        cache:false,
-	        dataType:"json", 
-	        success: function(status) {
-	            console.log(status); 
-	            if(status.data.state==200){
-	            	/*加载预付款流程信息*/
-	            	$(".contracts").empty();
-	               	$.each(status.data.select_one_product, function(idx,obj){
-	                    var select_one_product;
-	                   	select_one_product = '<div class="contract_product">'+
-	                   							'<div class="contract_no">'+obj.contract_no+'</div>'+
-	                   							'<div class="pooduct_name">'+obj.pooduct_name+'</div>'+
-	                   							'<div class="product_data">'+obj.product_data+'</div>'+
-	                   							'<div class="product_type">'+obj.product_type+'</div>'+
-	                   							'<div class="contract_state">'+obj.contract_state+'</div>'+
-	                   							'<div class="product_quantity">'+obj.product_question+'</div>'+
-	                   							'<div class="selcet_btn" select_menu_product="'+obj.id+'" style="background:#7d858c">选择返修产品</div>'+
-	                   						'</div>';
-	                    $(".contracts").append(select_one_product);
-	                }); 
-	            }
-	        }  
-	    });
+    	renderOemSaleNumTable(type,contract_no)
     });
 
-    //判断产品名称、型号
-     $(".pooduct_name").each(function(){
-        var news_maxwidth=4;
-        if($(this).text().length>news_maxwidth){
-            $(this).text($(this).text().substring(0,news_maxwidth));
-            $(this).html($(this).html()+'…');
-        }
-   	});
-    $(".product_type").each(function(){
-        var news_maxwidth=4;
-        if($(this).text().length>news_maxwidth){
-            $(this).text($(this).text().substring(0,news_maxwidth));
-            $(this).html($(this).html()+'…');
-        }
-   	});
-
    	//选择返修产品
-   	$(".selcet_btn").on('click',function(){
-   		var select_menu_product = $(this).attr("select_menu_product");
+   	$(".contracts").on('click','.selcet_btn',function(){
+   		var Id = Number($(this).attr("select_menu_product"));
    		$(".overlay_repair").show();
    		$(".overlay_product").show();
 
@@ -137,34 +95,9 @@ $(function(){
    			$(".overlay_product").hide();
    		});
    		 //展示返修产品列表
-	    $.getJSON({  
-	        type: "get",  
-	        url:"../../json/select_menu_product.json",  
-	        async: false, 
-	        cache:false,
-	        dataType:"json", 
-	        success: function(status) {
-	            console.log(status); 
-	            if(status.data.state==200){
-	            	/*加载预付款流程信息*/
-	               	$.each(status.data.product, function(idx,obj){
-	                    var product;
-	                   	product = '<div class="products_destrion">'+
-	                   							'<div class="no"><input type="checkbox" id="no" name="signs" value='+obj.id+'></div>'+
-	                   							'<div class="number">'+obj.number+'</div>'+
-	                   							'<div class="name1">'+obj.pooduct_name+'</div>'+
-	                   							'<div class="type">'+obj.product_type+'</div>'+
-	                   							'<div class="quantity">'+obj.product_question+'</div>'+
-	                   							'<div class="re_quantity"><input type="text" name="repair" id="repair_question" value="" style="height: 28px;width: 30%;border-radius: 10px;"></div>'+
-	                   							'<div class="up">'+
-	                   								'<div class="up_btn" product_id="'+obj.id+'" style="width: 80%;height: 25px;background: #3296ec;margin-top: 6px;line-height: 25px;border-radius: 15px;color: #fff;cursor: pointer;">上传</div>'+
-	                   							'</div>'+
-	                   						'</div>';
-	                    $(".products_info").append(product);
-	                }); 
-	            }
-	        }  
-	    });
+   		 ProductList(Id)
+	   //返修产品的全局数据
+		var porducts=[];
 
 	    //上传质量问题
 	    $(".up_btn").on('click',function(){
@@ -212,112 +145,62 @@ $(function(){
             		file = $("#file").val();
 	            	if(textare == '' && file == ''){
 	            		swal("产品质量描述以及图片不能为空!");
+	            		return false;
 	            	}
-	            	var product = {
-	            		"id" : id,
-	            		"textare" : textare,
-	            		"file" : file
-	            	};
             	}
-            	porducts.push(product);
+            	var product = {
+	            		"product_id" : id,
+	            		"product_question" : textare
+	            	};
+            	product['repair_url']=uploadFile("file","问题图片","png,jpg,jpeg,jpe,gif")
+            		porducts.push(product);
 	            $(".product_question").hide();
 	            $(".product_repair").hide();
             });
 	    });
 
 
-	    //返修产品的全局数据
-		var porducts=[];
 
 		//提交数据到返修列表
 		$(".add_repair").on('click',function(sweetalert){
 			var pro_num = [];
+			
+			var repari={};
+			var quantity=0;
+			console.log(porducts)
 			 //返修产品个数
 	        var pro_quantity = []
 	        var signs = $("input[name='signs']");
 	        $.each(signs,function(key,obj){
-	            if(obj.checked){
-	                var productId = Number(obj.value);
-	                pro_num.push(productId);
+	            if(obj.checked && $(this).parent().parent().find("input[name='repair']").val()>0){
+	            	 var mpro={"product_id":Number(obj.value),
+	            			 "product_quantity":$(this).parent().parent().find("input[name='repair']").val()}
+	            	 quantity+=Number(mpro.product_quantity);
+	            	 $.each(porducts,function(k,v){
+	            		 if(v.product_id==mpro['product_id']){
+	            			 mpro['repair_url']=v.repair_url
+	            			 mpro['product_question']=v.product_question
+	            		 }
+	            	 });
+	            	 pro_num.push(mpro)
 	            }
 	        });
-	        
-            var repairs = $("input[name='repair']");
-            $.each(repairs,function(key,obj){
-                if(obj){
-                    var repair_question = Number(obj.value);
-                    pro_quantity.push(repair_question); 
-                }
-            });
-
-            //去除值为零的数据
-			var removeItem = 0;  
-			pro_quantity = $.grep(pro_quantity, function(value) {
-			 	return value != removeItem;
-			});
-
-			//去除相同的元素
-			var sum = porducts.length;
-			for (var i = 0; i < sum; ++i) {
-				for (var j = 0; j < sum; ++j) {
-					//要注意，不能自己跟自己比
-					if (i != j) {
-					    if (porducts[i].id.indexOf(porducts[j].id) != -1)  {
-					        porducts.splice(j,1);
-					        sum--;
-					               
-					    }
-					}        
-				}
-			}
-
-			if(pro_num.length!==pro_quantity.length || pro_num.length!==porducts.length){
-				swal("提交数据不匹配!");
-				return false;
-			}
-
-			//判断序和产品的id是否相同
-			var q = pro_num.length;
-			for(var m=0;m<q;m++){
-				var ba=pro_num[m];
-				var aa=Number(porducts[m].id);
-				if(ba != aa){
-					swal("提交的产品质量和产品序号不匹配！");
-					return false;
-				}
-			}
-
-			//获取提交返修时间
-		    var myDate = new Date();
-		    var year=myDate.getFullYear();   //获取当前年
-		    var month=myDate.getMonth()+1;   //获取当前月
-		    var date=myDate.getDate();       //获取当前日
-		    var now_time=year+'.'+month+"."+date;
-
-			//合并数据
-			var data = [];
-			var a = pro_num.length;
-			for(var s=0;s<a;s++){
-				var json = {
-					"pro_num" : pro_num[s],
-					"pro_quantity" : pro_quantity[s],
-					"porducts" : porducts[s],
-					"now_time" : now_time
-				};
-				data.push(json);	
-			}
-			 
-	       console.log(data);
-	        $.getJSON({  
-                type: "get",  
-                url:"../../json/select_menu_product.json",
+	        repari['product_quantity']=quantity;
+	        repari['contract_id']=Id;
+	        repari['product_list']=pro_num;
+	     
+	       console.log(repari);
+	        $.ajax({  
+                type: "post",  
+                url:"/repair/save",
                 async: false, 
                 cache:false,
-                data : data,
+                contentType: 'application/json',
+                data:JSON.stringify(repari),
                 dataType:"json", 
                 success: function(status) {
                     console.log(status);
-                    if(status.data.state==200){
+                    if(status.code==1){
                         /*加载焊接合同信息*/
                         window.location.reload();//页面刷新
                     } 

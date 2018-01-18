@@ -1,17 +1,7 @@
-/*首页功能逻辑开始*/
+﻿/*首页功能逻辑开始*/
+var pagesize=15; 
+
 $(document).ready(function(){
-	/*
-	*判断页面窗口高度
-	*/
-
-
-    /**
-	部逻辑操作
-	*/
-	/*$(".user_message").click(function(){
-		window.location = "../person/home.html";
-	});*/
-
 	//登出操作
 	$(".logout").click(function(){
 		swal({
@@ -24,7 +14,15 @@ $(document).ready(function(){
 		  closeOnConfirm: false
 		},
 		function(){
-		  	window.location = "../login.html";
+			  $.getJSON({  
+		            url:"/logout",  
+		            async: false, 
+		            cache:false,
+		            dataType:"json", 
+		            success: function(status) {
+		            	window.location.href = "../login.html";
+		            }  
+		        }); 
 		});
 	});
 
@@ -61,65 +59,18 @@ $(document).ready(function(){
     	$(".toast_news").toggle(10);
     });
    
-     /*获取头像*/
-      $.getJSON({
-        url:"../../json/person.json",
-        cache:false,
-        success:function(result,data){
-            if(result.data.state==200){
-                $(".head").append('<img src="'+result.data.head_img+'" class="hade" />');
-                $("#user").text(result.data.user);
-            }
-        },
-        error:function(){}
-    });
-
-    /*订单状态根系，显示相关订单信息*/
-    $(".toast_news").hide();
+    /*获取头像*/
     $.getJSON({
-    	url:"../../json/1.json",
-        cache:false,
-    	success:function(result,data){
-    		if(result.data.state==200){
-                if(result.data.list.new=='' || result.data.list.new_order=='' || result.data.list.new_info==''){
-                    $(".toast_news").hide();
-                }else{
-                    $(".toast_news2").find("span").html("【温馨提示】"+result.data.list.new);
-                    $(".toast_news2").find("p").html(result.data.list.new_order+result.data.list.new_info);
-                    $(".toast_news").show();
-                }
-    		}
-    		else{
-    			$(".toast_news").hide();
-    		}
-    	},
-    	error:function(){
-    		$(".toast_news").hide();
- 			
-    	}
-	});
-
-    /*成交量交互*/
-      $.getJSON({
-        url:"../../json/4.json",
-        cache:false,
-        success:function(result,data){
-            if(result.data.state==1){
-                if(result.data){
-                    $(".volume").find(".data_year").html(result.data.data_year);
-                    $(".volume").find(".data_mouth").html(result.data.data_mouth);
-                    $(".volume").find(".data_week").html(result.data.data_week); 
-                }
-            }
-            else{ }
-        },
-        error:function(){}
-    });
-
-    //立即支付页面跳转
-    $(".new-pay").on('click',function(){
-        window.location = "../order/home.html";
-    })
+      url:"/user/info",
+      cache:false,
+      success:function(result,data){
+          if(result.code==1){
+              $(".head").append('<img src="'+result.data.head_img+'" class="hade" />');
+              $("#user").text(result.data.user);
+          }
+      },
+      error:function(){}
+  });
 
     /*menu菜单信息*/
     $.getJSON({
@@ -150,4 +101,3 @@ $(document).ready(function(){
     });
 });
 /*首页功能逻辑结束*/
-

@@ -31,27 +31,23 @@ $(function(){
 				"checkbox" : checkbox
 			};
 			$.ajax({  
-		     	type: "get",  
-		        url:"../json/1.json",  
-		        data:data,// 序列化表单值  
+				type: "post",  
+		        url:"/login", 
+		        contentType: 'application/json',
+		        data:JSON.stringify(data),// 序列化表单值  
 		        async: false, 
 		        cache:false,
 		        dataType: "json",
 		        success: function(status) {
 		        	console.log(status); 
-		        	if(status.user.state==200){
-		        		if(status.user.list.admin==user && status.user.list.pass==pass){
-			                window.location.basehref="./home/home.html";
-		                }else{   
-			                swal("用户名或密码错误，请重新输入！");
-		                }
-		            }
+		        	if(status.code==1){
+		        		window.location.href="./home/home.html";
+		        	}else{
+		        		 swal("用户名或密码错误，请重新输入！");
+		        	}
 		        }, 
 		        error: function(status) { 
-		        	console.log(status); 
-		        	if(status==0){
-		        		swal("用户名或密码错误，请重新输入！"); 
-		        	}
+		        	swal("用户名或密码错误，请重新输入！"); 
 		        }
 		 	}); 
 		}
@@ -82,27 +78,22 @@ $(function(){
 			"checkbox" : checkbox
 		};
 		$.ajax({  
-            type: "get",  
-            url:"../json/1.json",  
-            data:data,// 序列化表单值  
+			type: "post",  
+            url:"/login",  
+            contentType: 'application/json',
+            data:JSON.stringify(data),// 序列化表单值  
             async: false,
             cache:false, 
             dataType: "json",
             success: function(status) {
-                console.log(status); 
-                if(status.user.state==200){
-                	if(status.user.list.admin==user && status.user.list.pass==pass){
-	                    window.location.href="./home/home.html";
-                	}else{   
-	                	swal("用户名或密码错误，请重新输入！");
-                	}
-                }
+            	if(status.code==1){
+	        		window.location.href="./home/home.html";
+	        	}else{
+	        		 swal("用户名或密码错误，请重新输入！");
+	        	}
             }, 
             error: function(status) { 
-                console.log(status); 
-                if(status==0){
-                	swal("用户名或密码错误，请重新输入！"); 
-                }
+            	swal("用户名或密码错误，请重新输入！"); 
             }
         }); 
 	});
