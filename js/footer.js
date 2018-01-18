@@ -39,7 +39,7 @@ $(function(){
 
 	/*订单状态分析echarts饼状图展示消费   支付*/
 	$.getJSON({
-    	url:"/statis?type=0",
+    	url:"../../json/3.json",
     	cache:false,
     	success:function(result){
     			var myChart1 = echarts.init(document.getElementById('mychart1'));
@@ -90,7 +90,7 @@ $(function(){
 
 	/*订单状态分析echarts饼状图展示消费  焊接状态*/
 	$.getJSON({
-    	url:"/statis?type=1",
+    	url:"../../json/3.json",
     	cache:false,
     	success:function(result){
     			var myChart2 = echarts.init(document.getElementById('mychart2'));
@@ -141,7 +141,7 @@ $(function(){
 	
 	/*订单状态分析echarts饼状图展示消费  完成状态*/
 	$.getJSON({
-    	url:"/statis?type=2",
+    	url:"../../json/3.json",
     	cache:false,
     	success:function(result){
     			var myChart3 = echarts.init(document.getElementById('mychart3'));

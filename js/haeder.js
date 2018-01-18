@@ -4,27 +4,19 @@ var pagesize=15;
 $(document).ready(function(){
 	//登出操作
 	$(".logout").click(function(){
-		swal({
-		  title: "你确定要退出吗？",
-		  type: "warning",
-		  showCancelButton: true,
-		  confirmButtonColor: "#DD6B55",
-		  cancelButtonText: "取消",
-		  confirmButtonText: "退出",
-		  closeOnConfirm: false
-		},
-		function(){
-			  $.getJSON({  
-		            url:"/logout",  
-		            async: false, 
-		            cache:false,
-		            dataType:"json", 
-		            success: function(status) {
-		            	window.location.href = "../login.html";
-		            }  
-		        }); 
-		});
-	});
+    swal({
+      title: "你确定要退出吗？",
+      type: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#DD6B55",
+      cancelButtonText: "取消",
+      confirmButtonText: "退出",
+      closeOnConfirm: false
+    },
+    function(){
+        window.location = "../login.html";
+    });
+  });
 
 	/*
 	*鼠标点击，背景变色
@@ -61,7 +53,7 @@ $(document).ready(function(){
    
     /*获取头像*/
     $.getJSON({
-      url:"/user/info",
+      url:"../../json/person.json",
       cache:false,
       success:function(result,data){
           if(result.code==1){

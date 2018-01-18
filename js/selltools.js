@@ -3,9 +3,9 @@ function renderOemOrderTable(){
     //判断展示的合同类型
     $(".contracts").html('');
     $.ajax({
-        url:"/repair/list",
-        cache:false,
-        type: "post",  
+        type: "get",  
+        url:"../../json/oem_menu.json",  
+        cache:false, 
         contentType: 'application/json',
         dataType:"json",
         data:JSON.stringify({}),
@@ -53,7 +53,7 @@ function paginationOem(num,list){
 function ProductList(data){
     $.getJSON({  
         type: "get",  
-        url:"/order/detail?id="+data,  
+        url:"../../json/oem_menu_data.json",
         async: false, 
         cache:false,
         dataType:"json", 
