@@ -14,7 +14,7 @@
 	//data_time['type']="OEM"
 	$(".order_ul").html('');
 	$.ajax({
-       	url:"/order/list",
+       	url:"../../json/3.json",
         cache:false,
         type: "post",  
         contentType: 'application/json',
@@ -93,13 +93,13 @@ function DataTime(){
 //公告通知
 function Cement(){
    $.ajax({
-        url:"/notice/commonList",
+        url:"../../json/2.json",
         cache:false,
         type: "post",  
         contentType: 'application/json',
         dataType:"json", 
         success:function(e){
-            if(e.code==1){
+            if(e.data.state==200){
                 //限制展示的个数
                 $.each(e.data, function(idx,obj){
                     CementList(obj)
