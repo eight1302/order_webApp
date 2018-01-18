@@ -14,11 +14,11 @@ header{
 	margin: 0;
 	padding: 0;
 	width: 100%;
-	height: 110px;
+	height: 70px;
 }
 .contact_inf{
 	width: 100%;
-	height: 110px;
+	height: 70px;
 	overflow: hidden;
 	display: inline-flex;
 	color: #fff;
@@ -40,13 +40,13 @@ p{
 	height: auto;
 	margin-top: 5px;
 	overflow: hidden;
-	margin-left: 50px;
+	margin-left: 15px;
 }
 .person{
 	width: 100%;
-	height: auto;
-	margin-top: 20px;
-	font-size: 12px;
+    height: auto;
+    margin-top: 5px;
+    font-size: 12px;
 }
 .complaints{
 	width: 100%;
@@ -96,7 +96,7 @@ p{
 }
 .logout{
     margin-right: 20px;
-    width: 60px;
+    width: 50px;
     height: 30px;
     margin-left: 200px;
     margin-top: -30px;
@@ -131,7 +131,7 @@ a:hover{
 /*交易*/
 .volume{
     height: 30px;
-    margin-top: 30px;
+    margin-top: 8px;
     font-size: 12px;
     margin-left: 90px;
     float: right;
@@ -144,7 +144,7 @@ a:hover{
 	margin-left: 17%;
 }
 .volume_year_data{
-	width: 60px;
+	width: 45px;
     height: 25px;
     border: 1px solid #4592c7;
     background-color: #4592c7;
@@ -165,7 +165,7 @@ a:hover{
 	margin-left: 36%;
 }
 .volume_mouth_data{
-    width: 60px;
+    width: 45px;
     height: 25px;
     border: 1px solid #428ec4;
     background-color: #428ec4;
@@ -187,7 +187,7 @@ a:hover{
 }
 
 .volume_week_data{
-    width: 60px;
+    width: 45px;
     height: 25px;
     border: 1px solid #428ec4;
     background-color: #428ec4;
@@ -202,7 +202,7 @@ a:hover{
 }
 
 .deal{
-	width: 60px;
+	width: 50px;
     float: right;
     line-height: 28px;
     border-bottom: 1px solid #5db5f1;
@@ -287,22 +287,22 @@ input::-webkit-input-placeholder{
 	height: auto;
 }
 nav{
-	width: 6.8%;
-	min-width: 130px;
-	height: 100%;
-	float: left;
+    width: 90px;
+    height: 100%;
+    float: left;
+    font-size: 10px;
 }
 /*右侧页面设计*/
 footer{
-	width:93%;
-    height: 89%;
     background-color: #edf0f5;
     float: right;
-    position: fixed;
-    margin-left: 131px;
-    min-width: 1200px;
+    position: absolute;
+    margin-left: 90px;
+    min-width: 499px;
     overflow-x: auto;
     border-left: 1px solid #bfbfbf;
+    width: 95%;
+    height: 86%;
 }
 
 /*弹出消息页面设计*/

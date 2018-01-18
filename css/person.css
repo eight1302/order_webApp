@@ -1,9 +1,8 @@
 @charset "utf-8";
 /*个人中心样式设计*/
 .feature{
-	margin-top: 15px;
 	height: 98%;
-	min-width: 1200px;
+    padding: 0;
 }
 .feature1{
     height: 95%
@@ -12,21 +11,17 @@
 .person_detail{
 	margin: 0;
 	padding: 0;
-	height: 20%;
-	min-height: 160px; 
-	min-width: 1070px;
+	height: auto;
 }
 .basic_information{
-	height: 100%;
-	width: 42%;
-	min-width: 495px;
+    width: 98%;
 	margin: 0;
 	padding: 0;
-	margin-right: 0.7%;
+    height: 130px;
 	border-radius: 3px;
 	border: 1px solid #d7e0f1;
 	background: #fff;
-    overflow: hidden;
+    margin-top: 10px;
 }
 .basic_tital{
 	height: 30px;
@@ -48,12 +43,11 @@
 }
 .person_info{
 	width: 80%;
-    height: 100%;
     float: right;
     font-size: 12px;
-    min-width: 455px;
+    min-width: 390px;
     position: absolute;
-    margin-left: 110px;
+    margin-left: 80px;
 }
 .upload{
     text-align: center;
@@ -83,12 +77,7 @@
 	margin: auto;
 }
 .one{
-	margin-top: 2%;
-    overflow: hidden;
-    padding: 0;
-    width: 42%;
-    float: left;
-    margin-left: 2%;
+	margin-top: 10px;
 }
 .one1{
 	margin-top: 4%;
@@ -109,8 +98,6 @@
 	padding: 0;
 }
 .basic1{
-	width: 36%;
-	max-width: 70px;
 	overflow: hidden;
 }
 .basic2{
@@ -128,7 +115,7 @@
 	font-size: 10px;
 }
 .text_vat{
-	min-width: 90%;
+	width:100px;
 	overflow: hidden;
 	padding: 0;
 	border:none;
@@ -138,7 +125,7 @@
 	font-size: 10px;
 }
 .text_basic{
-	max-width: 90%;
+	width: 95px;
 	overflow: hidden;
 	padding: 0;
 	border:none;
@@ -150,7 +137,7 @@
 .billing_detail{
 	width: 75%;
 	margin: auto;
-	height: 80%;
+	height: 70%;
 	background: #fff;
 	overflow: hidden;
 }
@@ -181,35 +168,32 @@
 }
 
 .vat_information{
-    height: 100%;
-    width: 34%;
+    height: 130px;
     min-width: 400px;
     margin: 0;
     padding: 0;
-    margin-right: 0.7%;
     border-radius: 3px;
     border: 1px solid #d7e0f1;
     background: #fff;
-    float: left;
+    margin-top: 10px;
 }
 .billing_information{
-	height: 100%;
-    max-width: 21%;
-    min-width: 245px;
+    width: 98%;
+	height: 130px;
     margin: 0;
     padding: 0;
-    margin-right: 0.7%;
     border-radius: 3px;
     border: 1px solid #d7e0f1;
     background: #fff;
-    float: left;
+    margin-top: 10px;
 }
 /*添加的发货地址*/
 .person_address{
     margin: 0;
     padding: 0;
     margin-top: 15px;
-    height: 76%;
+    height: auto;
+    margin-bottom: 20px;
     min-height: 68%;
     max-width: 98.5%;
     background: #fff;
@@ -229,17 +213,14 @@
 .to_address{
 	margin-top: 20px;
     width: 96%;
-    height: 90px;
-    line-height: 30px;
+    line-height: 25px;
     margin: auto;
     border-bottom: 1px solid #c6dadc;
     margin-bottom: 10px;
     font-size: 12px;
 }
 .to_address_info{
-    max-height: 65%;
-    min-height: 65%;
-    overflow: auto;
+    margin-bottom: 10px;
     font-size: 12px;
     min-width: 200px;
     overflow: auto;
@@ -253,7 +234,6 @@
 	cursor: pointer;
 }
 .address_list{
-	max-width: 24%;
     height: 150px;
    	border: 1px solid #d7e0f1;
    	border-radius: 3px;
@@ -263,7 +243,6 @@
     margin-top: 15px;
 }
 .address_list:hover{
-	max-width: 411px;
     height: 150px;
    	border: 1px solid #d7e0f1;
    	border-radius: 3px;
@@ -329,18 +308,19 @@
 
 /*新增地址*/
 .new_address{
-	display: block;
+    display: block;
     position: absolute;
-    width: 30%;
-    height: 300px;
+    width: 500px;
+    height: auto;
     background-color: #edf0f5;
     z-index: 100;
     margin: auto;
     display: none;
     border-radius: 6px;
     box-shadow: 0 0 10px #716c6c;
-    margin-left: 25%;
+    margin-left: 20%;
     font-size: 12px;
+    margin-top: 10%;
 }
 .new_address_tital{
 	width: 100%;
@@ -357,11 +337,13 @@
 .btn_pr{
 	margin-top: 20px;
 	height: 25px;
+    margin-bottom: 20px;
 }
 .detail{
 	width: 100%;
 	height: 200px;
 	border-radius: 0 0 3px 3px;
+    margin-bottom: 20px; 
 }
 .add_new{
 	float: left;
@@ -392,18 +374,19 @@
     cursor: pointer;
 }
 .credentials{
-    width: 30%;
+    width: 400px;
     height: 400px;
     background: red;
     display: block;
     position: absolute;
     background-color: #edf0f5;
     z-index: 9999;
-    margin: auto;
+    /* margin: auto; */
     display: none;
     border-radius: 6px;
     box-shadow: 0 0 10px #716c6c;
-    margin-left: 25%;
+    margin-left: 22%;
+    margin-top: 10%;
 }
 .uplod{
     width: 90%;

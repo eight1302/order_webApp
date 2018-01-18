@@ -53,7 +53,7 @@ a:hover{
 }
 /*下面*/
 .footer_menu{
-	width: 130px;
+	width: 90px;
     /* margin-top: 50px; */
     height: 150px;
     overflow: hidden;
@@ -61,12 +61,12 @@ a:hover{
     bottom: 0;
 }
 .qr_code{
-	width: 80px;
-	height: 80px;
-	margin-left: 25px;
+	width: 60px;
+	height: 60px;
+	margin-left: 13px;
 }
 .des{
-	width: 80%;
+	width: 90px;
 	height: 50px;
 	border-top: 2px solid #e6eef6;
 	margin-top: 15px;
@@ -74,7 +74,7 @@ a:hover{
 	overflow: hidden;
 }
 .chuang{
-	width: 110px;
+	width: 80px;
 	overflow: hidden;
 	text-align: center;
 }
@@ -87,20 +87,19 @@ a:hover{
 	font-size: 10px; 
 }
 .yuan2{
-	width: 90px;
-	margin-top: 10px;
-	font-size: 10px;
-	overflow: hidden;
-	margin-left: 5px;
-	text-align: center;
+	width: 75px;
+    margin-top: 2px;
+    font-size: 10px;
+    overflow: hidden;
+    text-align: center;
 }
 .sale_menu{
     width: 167px;
-    height: 180px;
+   	height: 105px;
     z-index: 100;
     background: #fff;
-    margin-left: 130px;
-    margin-top: 350px;
+    margin-left: 91px;
+    margin-top: 311px;
     position: absolute;
     display: none;
     opacity: 0.9;
@@ -114,11 +113,11 @@ a:hover{
 .order_contract_menu{
     top: 0;
     width: 167px;
-    height: 120px;
+    height: 70px;
     z-index: 100;
     background: #fff;
-    margin-left: 130px;
-    margin-top: 230px;
+    margin-left: 91px;
+    margin-top: 190px;
     position: absolute;
     display: none;
     opacity: 0.9;
@@ -132,11 +131,11 @@ a:hover{
     top: 0;
     display: block;
     width: 167px;
-    height: 120px;
+    height: 70px;
     z-index: 100;
     background: #fff;
-    margin-left: 130px;
-    margin-top: 170px;
+    margin-left: 91px;
+    margin-top: 131px;
     position: absolute;
     display: none;
     opacity: 0.9;
@@ -144,4 +143,20 @@ a:hover{
 .server_order_ul>li:hover{
 	background-color: #2c7fd2;
     color: #f3f5f7;
+}
+
+.sale_ul>li{
+    display: block;
+    height: 35px;
+    line-height: 35px;
+}
+.server_order_ul>li{	
+	 display: block;
+    height: 35px;
+    line-height: 35px;
+}
+.order_contract_ul>li{
+	 display: block;
+    height: 35px;
+    line-height: 35px;
 }

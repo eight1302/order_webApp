@@ -1,13 +1,13 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 /*首页主页面样式*/
 footer{
-	width:93%;
-	height: 89%;
+	height: 90%;
+    width: -webkit-fill-available;
+
 }
 .main{
-	width: 100%;
-	margin-top: 10px;
-	height: 95%;
+	margin-top: 15px;
+    height: 98%;
 }
 section{
 	display: block;
@@ -43,10 +43,7 @@ section{
 	height: 100%;
 }
 .order{
-	width: 74.5%;
 	height: 98%;
-	float: right;
-	margin-left: 5px;
 }
 .new{
 	margin-top: 10px;
@@ -74,7 +71,7 @@ section{
     margin-top: 15px;
     width: 100%;
     height: 83%;
-    overflow: auto;
+    overflow: hidden;
 }
 .bull_news>li{
 	display: block;
@@ -187,19 +184,20 @@ table{
     background-color: #000;
 }
 .order_tatal{
-    height: 88%;
+    height: 95%;
     display: block;
     font-size: 12px;
-    overflow: auto;
+    /* overflow: auto; */
+    overflow-y: hidden;
     width: 100%;
 }
 .order_ul>li{
 	display: block;
-    height: 30px;
-    line-height: 30px;
+    height: 35px;
+    line-height: 35px;
     overflow: hidden;
     width: 100%;
-    font-size: 12px;
+    font-size: 14px;
 }
 /*订单状态列图形面设计*/
 .order_echart{
@@ -237,20 +235,21 @@ table{
 	overflow: hidden;
 	margin-top: 5px;
 }
-.mychart1,.mychart2,.mychart3{
-	height: 100%;
+.mychart1{
+	width: 33%;
+	height: 90%;
+	float: left;
 }
-
 /*企业公告弹出窗设计*/
 .corporate_actions{
     display: block;
-    width: 36%;
+    width: 76%;
     height: 80%;
     background-color: #edf0f5;
     position: absolute;
     z-index: 100;
     margin: auto;
-    margin-left: 32%;
+    margin-left: 5%;
     display: none;
     border-radius: 6px;
     box-shadow: 0 0 10px #716c6c;
@@ -391,4 +390,21 @@ ul[class="pcb_li"]>li{
 	float: left;
 	height: 30px;
 	line-height: 30px;
+}
+.table_info{
+	padding: 0;
+    height: 28px;
+    line-height: 28px;
+    text-align: center;
+}
+.table_info:nth-child(2n){
+    background: #f5f5f5;
+}
+.table_info:hover{
+    background: #eaeaea;
+}
+
+.order_statu,.order_statu1{
+	width: 16.66%;
+	float: left;
 }

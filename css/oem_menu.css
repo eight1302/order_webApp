@@ -1,4 +1,4 @@
-.oem_product,.weld_product{
+﻿.oem_product,.weld_product{
 	width: 98%;
     height: 92%;
     margin: auto;
@@ -19,7 +19,7 @@
     padding: 0;
 }
 .repair_process{
-    width: 70%;
+    width: 65%;
     height: 60px;
     margin: auto;
     padding: 0;
@@ -86,15 +86,7 @@
     color: #fff;
     text-align: center;
 }
-.contract_no,.contract_data,.pooduct_no,.pooduct_name,.product_type,.product_quantity,.contract_state{
-	width: 12%;
-	float: left;
-}
-.logistics,.selcet_pro{
-	width: 8%;
-	float: left;
-}
-.log_info,.selcet_detail{
+.log_info,.selcet_detail,.question_detail{
 	width: 90%;
     float: left;
     border-radius: 15px;
@@ -184,7 +176,7 @@
     float: right;
     margin-top: 10px;
 }
-.product_question{
+.product_question,.product_all{
     top: 0;
     left: 0;
     position: fixed;
@@ -335,4 +327,7 @@
     height: 39px;
     border-radius: 0 6px 6px 0;
     border: none;
+}
+.pad_one{
+    padding: 0;
 }

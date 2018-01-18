@@ -1,5 +1,4 @@
-.select_product{
-    width: 98%;
+﻿.select_product{
     height: 92%;
     margin: auto;
     background: #fff;
@@ -19,7 +18,7 @@
     padding: 0;
 }
 .repair_process{
-    width: 70%;
+    width: 55%;
     height: 60px;
     margin: auto;
     padding: 0;
@@ -86,13 +85,13 @@
     color: #fff;
     text-align: center;
 }
-.contract_no,.pooduct_name,.product_data,.contract_state,.product_type{
-	width: 16.6%;
+.contract_no,.product_data,.contract_state,.product_quantity,.selcet_pro{
 	float: left;
+    padding: 0;
 }
-.product_quantity{
-	width: 8.4%;
-	float: left;
+.contract_type,.product_type{
+    float: left;
+    padding: 0;
 }
 .page-data{
     height: 98%;
@@ -118,8 +117,7 @@
     background: #eaeaea;
 }
 .selcet_btn{
-    width: 7%;
-    float: left;
+   display: block;
     border-radius: 15px;
     background: #176cb7;
     height: 27px;
@@ -127,7 +125,6 @@
     line-height: 27px;
     color: #fff;
     cursor: pointer;
-    margin-left: 0.5%;
 }
 .page{
     width: 100%;
@@ -182,17 +179,14 @@
     background: #3296ec;
     padding: 0;
 }
-.no{
-    float: left;
-    width: 3%;
-}
+
 .up{
     float: left;
-    width: 7%;
+    width: 12%;
 }
-.number,.name1,.type,.quantity,.re_quantity,.re_question{
+.no,.number,.name1,.type,.quantity,.re_quantity,.re_question{
     float: left;
-    width: 18%;
+    width: 14.285%;
 }
 .products_info{
     width: 98%;
@@ -205,8 +199,8 @@
 .products_destrion{
     padding: 0;
     margin: 0;
-    height: 40px;
-    line-height: 40px;
+    height: 30px;
+    line-height: 30px;
     color: #4193d2;
     text-align: center;
     font-size: 13px;
